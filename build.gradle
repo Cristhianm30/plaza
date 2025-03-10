@@ -26,6 +26,13 @@ ext {
 	lombokMapstructBindingVersion = "0.2.0"
 	mySqlConnectorVersion = "8.0.32"
 	openApiVersion = "1.6.11"
+	openFeignVersion = "4.2.0"
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.3"
+	}
 }
 
 dependencies {
@@ -34,6 +41,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${openFeignVersion}"
 
 	runtimeOnly "mysql:mysql-connector-java:${mySqlConnectorVersion}"
 
@@ -45,6 +53,8 @@ dependencies {
 
 	implementation "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
 	implementation "org.springdoc:springdoc-openapi-webflux-ui:${openApiVersion}"
+
+
 }
 
 tasks.named('test') {

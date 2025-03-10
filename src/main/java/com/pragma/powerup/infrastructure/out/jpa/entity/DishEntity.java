@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Data
@@ -18,30 +19,27 @@ public class DishEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",nullable = false )
+    @Column(nullable = false)
     private String name;
 
-    @ManyToOne
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private Integer price;
+
+    @Column(nullable = false)
+    private String imageUrl;
+
+    @Column(nullable = false)
+    private Boolean active = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
 
-    @Column(name = "description",nullable = false )
-    private String description;
-
-    @Column(name = "price",nullable = false )
-    private Integer price;
-
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private RestaurantEntity restaurant;
-
-    @Column(name = "url_image",nullable = false )
-    private String urlImage;
-
-    @Column(name = "active",nullable = false )
-    private Boolean active;
-
-    @ManyToMany(mappedBy = "dish")
-    private Set<OrderEntity> orderList;
 
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,9 +20,11 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "category")
-    private List<DishEntity> dishes;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    @Column(name = "quantity",nullable = false)
-    private Integer quantity;
+    private String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<DishEntity> dishes = new ArrayList<>();
 }

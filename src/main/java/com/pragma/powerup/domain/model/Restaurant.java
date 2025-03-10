@@ -11,20 +11,20 @@ public class Restaurant {
 
     private Long ownerId;
 
-    private String cellPhone;
+    private String phone;
 
-    private String urlLogo;
+    private String logoUrl;
 
     private String nit;
 
 
-    public Restaurant(Long id, String name, String address, Long ownerId, String cellPhone, String urlLogo, String nit) {
+    public Restaurant(Long id, String name, String address, Long ownerId, String phone, String logoUrl, String nit) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.ownerId = ownerId;
-        this.cellPhone = cellPhone;
-        this.urlLogo = urlLogo;
+        this.phone = phone;
+        this.logoUrl = logoUrl;
         this.nit = nit;
     }
 
@@ -60,20 +60,20 @@ public class Restaurant {
         this.ownerId = ownerId;
     }
 
-    public String getCellPhone() {
-        return cellPhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
+    public void setPhone(String cellPhone) {
+        this.phone = cellPhone;
     }
 
-    public String getUrlLogo() {
-        return urlLogo;
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
-    public void setUrlLogo(String urlLogo) {
-        this.urlLogo = urlLogo;
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
     public String getNit() {

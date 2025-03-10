@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,19 +22,24 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id",nullable = false )
-    private Long clientId;
 
-    @Column(name = "date",nullable = false )
-    private LocalDate date;
-
-    @Column(name = "status", nullable = false)
+    @Column(nullable = false)
     private String status;
 
-    @Column(name = "chef_id")
-    private Long chefId;
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private Long clientId;
+
+    private Long chefId;  // Nullable hasta asignación
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private RestaurantEntity restaurant;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDishEntity> orderDishes = new ArrayList<>();
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,29 +20,29 @@ public class RestaurantEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",nullable = false )
+    @Column(nullable = false, unique = true)
+    private String nit;  // Requerido según tu código actual
+
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "address", nullable = false)
+    @Column(nullable = false)
     private String address;
 
-    @Column(name = "owner_id", nullable = false)
+    @Column(nullable = false)
+    private String phone;
+
+    @Column(nullable = false)
+    private String logoUrl;
+
+    @Column(nullable = false)
     private Long ownerId;
 
-    @Column(name = "cell_phone", nullable = false)
-    private String cellPhone;
-
-    @Column(name = "url_logo", nullable = false)
-    private String urlLogo;
-
-    @Column(name = "nit", nullable = false)
-    private String nit;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<DishEntity> dishes = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant")
-    private List<DishEntity> dishList;
-
-    @OneToMany(mappedBy = "restaurant")
-    private List<OrderEntity> orderList;
+    private List<OrderEntity> orders = new ArrayList<>();
 
 
 
