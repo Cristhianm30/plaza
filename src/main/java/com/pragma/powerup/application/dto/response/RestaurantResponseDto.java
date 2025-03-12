@@ -11,7 +11,7 @@ public class RestaurantResponseDto {
     private String name;
     private String nit;
     private String address;
-    private String cellPhone;
+    private String phone;
     private String logoUrl;
     private Long ownerId;
 }

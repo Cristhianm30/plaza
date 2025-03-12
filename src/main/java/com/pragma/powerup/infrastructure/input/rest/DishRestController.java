@@ -1,0 +1,26 @@
+package com.pragma.powerup.infrastructure.input.rest;
+
+
+import com.pragma.powerup.application.dto.request.DishRequestDto;
+import com.pragma.powerup.application.dto.response.DishResponseDto;
+import com.pragma.powerup.application.handler.IDishHandler;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/dishes")
+@RequiredArgsConstructor
+public class DishRestController {
+
+    private final IDishHandler dishHandler;
+
+    @PostMapping
+    public ResponseEntity<DishResponseDto> createDish(
+            @RequestBody DishRequestDto dishRequest,
+            @RequestHeader("Authorization") String token) {
+
+        return ResponseEntity.ok(dishHandler.createDish(dishRequest, token));
+    }
+
+}

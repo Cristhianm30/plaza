@@ -3,7 +3,7 @@ package com.pragma.powerup.domain.usecase.validations;
 import com.pragma.powerup.domain.exception.InvalidRestaurantCellPhoneException;
 import com.pragma.powerup.domain.exception.InvalidRestaurantNameException;
 import com.pragma.powerup.domain.exception.InvalidRestaurantNitException;
-import com.pragma.powerup.domain.exception.InvalidRestaurantFieldsException;
+import com.pragma.powerup.domain.exception.InvalidFieldsException;
 import com.pragma.powerup.domain.model.Restaurant;
 
 public class RestaurantValidations {
@@ -20,22 +20,22 @@ public class RestaurantValidations {
     private void validateFields(Restaurant restaurant) {
 
         if (restaurant.getName() == null || restaurant.getName().isBlank()) {
-            throw new InvalidRestaurantFieldsException();
+            throw new InvalidFieldsException();
         }
         if (restaurant.getNit() == null || restaurant.getNit().isBlank()) {
-            throw new InvalidRestaurantFieldsException();
+            throw new InvalidFieldsException();
         }
         if (restaurant.getAddress() == null || restaurant.getAddress().isBlank()) {
-            throw new InvalidRestaurantFieldsException();
+            throw new InvalidFieldsException();
         }
         if (restaurant.getPhone() == null || restaurant.getPhone().isBlank()) {
-            throw new InvalidRestaurantFieldsException();
+            throw new InvalidFieldsException();
         }
         if (restaurant.getLogoUrl() == null || restaurant.getLogoUrl().isBlank()) {
-            throw new InvalidRestaurantFieldsException();
+            throw new InvalidFieldsException();
         }
         if (restaurant.getOwnerId() == null) {
-            throw new InvalidRestaurantFieldsException();
+            throw new InvalidFieldsException();
         }
     }
 

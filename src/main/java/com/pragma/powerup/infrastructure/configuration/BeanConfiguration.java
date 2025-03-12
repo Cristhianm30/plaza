@@ -1,24 +1,35 @@
 package com.pragma.powerup.infrastructure.configuration;
 
+import com.pragma.powerup.domain.api.IDishServicePort;
 import com.pragma.powerup.domain.api.IObjectServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
-import com.pragma.powerup.domain.spi.IObjectPersistencePort;
-import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
-import com.pragma.powerup.domain.spi.IUserFeignPort;
+import com.pragma.powerup.domain.spi.*;
+import com.pragma.powerup.domain.usecase.DishUseCase;
 import com.pragma.powerup.domain.usecase.ObjectUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantUseCase;
+import com.pragma.powerup.domain.usecase.validations.DishValidations;
 import com.pragma.powerup.domain.usecase.validations.RestaurantValidations;
 import com.pragma.powerup.infrastructure.out.feign.IUserFeignClient;
 import com.pragma.powerup.infrastructure.out.feign.UserFeignAdapter;
+
+import com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter;
+import com.pragma.powerup.infrastructure.out.jpa.adapter.DishJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.ObjectJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter;
+import com.pragma.powerup.infrastructure.out.jpa.mapper.ICategoryEntityMapper;
+import com.pragma.powerup.infrastructure.out.jpa.mapper.IDishEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IObjectEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper;
+import com.pragma.powerup.infrastructure.out.jpa.repository.ICategoryRepository;
+import com.pragma.powerup.infrastructure.out.jpa.repository.IDishRepository;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IObjectRepository;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
+
+import com.pragma.powerup.infrastructure.security.JwtTokenProviderAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 @RequiredArgsConstructor
@@ -27,6 +38,10 @@ public class BeanConfiguration {
     private final IObjectEntityMapper objectEntityMapper;
     private final IRestaurantRepository restaurantRepository;
     private final IRestaurantEntityMapper restaurantEntityMapper;
+    private final IDishEntityMapper dishEntityMapper;
+    private final IDishRepository dishRepository;
+    private final ICategoryRepository categoryRepository;
+    private final ICategoryEntityMapper categoryEntityMapper;
 
 
 
@@ -64,4 +79,42 @@ public class BeanConfiguration {
     public RestaurantValidations restaurantValidations(){
         return new RestaurantValidations();
     }
+
+    @Bean
+    public IJwtTokenProviderPort jwtTokenProvider() {
+        return new JwtTokenProviderAdapter();
+    }
+
+    @Bean
+    public IDishServicePort dishServicePort(
+            IDishPersistencePort dishPersistencePort,
+            DishValidations dishValidations,
+            IJwtTokenProviderPort jwtTokenProvider,
+            IRestaurantPersistencePort restaurantPersistence) {
+
+        return new DishUseCase(
+                dishPersistencePort,
+                dishValidations,
+                jwtTokenProvider,
+                restaurantPersistence
+        );
+    }
+
+    @Bean
+    public IDishPersistencePort dishPersistencePort() {
+        return new DishJpaAdapter(dishEntityMapper,dishRepository);
+    }
+
+    @Bean
+    public DishValidations dishValidations() {
+        return new DishValidations();
+    }
+
+    @Bean
+    public ICategoryPersistencePort categoryPersistencePort() {
+        return new CategoryJpaAdapter(categoryEntityMapper, categoryRepository);
+    }
+
+
+
 }

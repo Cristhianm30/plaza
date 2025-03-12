@@ -1,10 +1,11 @@
 package com.pragma.powerup.infrastructure.out.feign;
 
+
 import com.pragma.powerup.application.dto.response.UserResponseDto;
 import com.pragma.powerup.domain.spi.IUserFeignPort;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+
 
 
 public class UserFeignAdapter implements IUserFeignPort {
@@ -23,5 +24,6 @@ public class UserFeignAdapter implements IUserFeignPort {
                 ? user.getRole().getName()
                 : null;
     }
+
 }
 

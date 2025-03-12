@@ -12,6 +12,18 @@ spring:
       ddl-auto: update
     show-sql: true
 
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+        web: DEBUG
+
+
+jwt:
+  secret: "5qaPrnb5CYNQqH3WkaNX6ZZZEBMbftqrhxyv0tPMk1Xwjq6kgHNehigwIabVg/JWZ3ekmkhH2QSnY406SdnPSA=="
+  expiration: 3600000
+
 user-service:
   url: http://localhost:8080
 

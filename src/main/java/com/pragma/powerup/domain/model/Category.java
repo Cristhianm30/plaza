@@ -2,13 +2,13 @@ package com.pragma.powerup.domain.model;
 
 public class Category {
     private Long id;
-    private Dish dish;
-    private Integer quantity;
+    private String name;
+    private String description;
 
-    public Category(Long id, Dish dish, Integer quantity) {
+    public Category(Long id, String name, String description) {
         this.id = id;
-        this.dish = dish;
-        this.quantity = quantity;
+        this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
@@ -19,19 +19,19 @@ public class Category {
         this.id = id;
     }
 
-    public Dish getDish() {
-        return dish;
+    public String getName() {
+        return name;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

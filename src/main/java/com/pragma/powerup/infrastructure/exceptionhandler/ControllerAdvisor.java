@@ -22,11 +22,11 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
     }
 
-    @ExceptionHandler(InvalidRestaurantFieldsException.class)
-    public ResponseEntity<Map<String, String>> invalidRestaurantFieldsException(
-            InvalidRestaurantFieldsException invalidRestaurantFieldsException) {
+    @ExceptionHandler(InvalidFieldsException.class)
+    public ResponseEntity<Map<String, String>> invalidFieldsException(
+            InvalidFieldsException invalidException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_RESTAURANT_FIELDS.getMessage()));
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_FIELDS.getMessage()));
     }
 
     @ExceptionHandler(InvalidRestaurantCellPhoneException.class)
@@ -55,6 +55,34 @@ public class ControllerAdvisor {
             InvalidOwnerException invalidOwnerException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_OWNER_ID.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPriceException.class)
+    public ResponseEntity<Map<String, String>> invalidPriceException(
+            InvalidPriceException invalidPriceException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_PRICE.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<Map<String, String>> invalidTokenException(
+            InvalidTokenException invalidTokenException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_TOKEN.getMessage()));
+    }
+
+    @ExceptionHandler(RestaurantNotFoundException.class)
+    public ResponseEntity<Map<String, String>> restaurantNotFoundException(
+            RestaurantNotFoundException restaurantNotFoundException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.RESTAURANT_NOT_FOUND.getMessage()));
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Map<String, String>> categoryNotFoundException(
+            CategoryNotFoundException categoryNotFoundException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.CATEGORY_NOT_FOUND.getMessage()));
     }
     
 }
