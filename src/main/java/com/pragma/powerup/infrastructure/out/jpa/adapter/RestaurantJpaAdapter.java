@@ -3,7 +3,7 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 import com.pragma.powerup.domain.exception.RestaurantNotFoundException;
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
-import com.pragma.powerup.domain.model.RestaurantPagination;
+import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
@@ -39,16 +39,16 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
     }
 
     @Override
-    public RestaurantPagination findAllPaginated(int page, int size, String sortBy) {
+    public Pagination<Restaurant> findAllPaginated(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, sortBy));
         Page<RestaurantEntity> entityPage = restaurantRepository.findAll(pageable);
 
         List<Restaurant> restaurants = entityPage.getContent()
                 .stream()
                 .map(restaurantEntityMapper::entityToModel)
-                .toList();
+                .collect(Collectors.toList());
 
-        return new RestaurantPagination(
+        return new Pagination<Restaurant>(
                 restaurants,
                 entityPage.getNumber(),
                 entityPage.getTotalPages(),

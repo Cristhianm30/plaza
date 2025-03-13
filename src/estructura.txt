@@ -25,6 +25,8 @@ C:.
 │   │               │   │   └───response
 │   │               │   │           DishResponseDto.java
 │   │               │   │           ObjectResponseDto.java
+│   │               │   │           RestaurantItemResponseDto.java
+│   │               │   │           RestaurantPaginationResponseDto.java
 │   │               │   │           RestaurantResponseDto.java
 │   │               │   │           RoleDto.java
 │   │               │   │           UserResponseDto.java
@@ -73,6 +75,7 @@ C:.
 │   │               │   │       ObjectModel.java
 │   │               │   │       Order.java
 │   │               │   │       Restaurant.java
+│   │               │   │       RestaurantPagination.java
 │   │               │   │       
 │   │               │   ├───spi
 │   │               │   │       ICategoryPersistencePort.java
@@ -162,6 +165,9 @@ C:.
                     │   
                     └───domain
                         └───usecase
-                                DishUseCaseTest.java
-                                RestaurantUseCaseTest.java
-                                
+                            │   DishUseCaseTest.java
+                            │   RestaurantUseCaseTest.java
+                            │   
+                            └───validations
+                                    TokenValidationsTest.java
+                                    

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface IRestaurantRepository extends JpaRepository<RestaurantEntity,Long > {
     Optional<RestaurantEntity> findById (Long id);
 
+
 }

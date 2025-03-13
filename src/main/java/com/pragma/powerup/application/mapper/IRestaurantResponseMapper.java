@@ -13,5 +13,5 @@ public interface IRestaurantResponseMapper {
 
     Restaurant responseToModel(RestaurantResponseDto restaurantResponseDto);
     RestaurantResponseDto modelToResponse(Restaurant restaurant);
-    RestaurantItemResponseDto toRestaurantItemDto(Restaurant restaurant);
+    RestaurantItemResponseDto modelToItemDto(Restaurant restaurant);
 }

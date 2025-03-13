@@ -4,7 +4,7 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.exception.InvalidOwnerException;
 import com.pragma.powerup.domain.model.Restaurant;
-import com.pragma.powerup.domain.model.RestaurantPagination;
+import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import com.pragma.powerup.domain.spi.IUserFeignPort;
 import com.pragma.powerup.domain.usecase.validations.RestaurantValidations;
@@ -78,11 +78,11 @@ public class RestaurantUseCaseTest {
         int page = 0, size = 10;
         String sortBy = "name";
         // Se crea un objeto de paginación de ejemplo (ajusta según la estructura de tu POJO)
-        RestaurantPagination pagination = new RestaurantPagination(Collections.emptyList(), 0, 0, 0L);
+        Pagination pagination = new Pagination(Collections.emptyList(), 0, 0, 0L);
         // Por ejemplo, podrías setear totalPages, currentPage, etc.
         when(restaurantPersistencePort.findAllPaginated(page, size, sortBy)).thenReturn(pagination);
 
-        RestaurantPagination result = restaurantUseCase.getAllRestaurantsPaginated(page, size, sortBy);
+        Pagination result = restaurantUseCase.getAllRestaurantsPaginated(page, size, sortBy);
 
         verify(restaurantPersistencePort, times(1)).findAllPaginated(page, size, sortBy);
         assertEquals(pagination, result);

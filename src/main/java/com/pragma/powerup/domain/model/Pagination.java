@@ -2,26 +2,26 @@ package com.pragma.powerup.domain.model;
 
 import java.util.List;
 
-public class RestaurantPagination<T> {
+public class Pagination<T> {
 
-    private List<T> restaurants;
+    private List<T> items;
     private int currentPage;
     private int totalPages;
     private long totalItems;
 
-    public RestaurantPagination(List<T> restaurants, int currentPage, int totalPages, long totalItems) {
-        this.restaurants = restaurants;
+    public Pagination(List<T> items, int currentPage, int totalPages, long totalItems) {
+        this.items = items;
         this.currentPage = currentPage;
         this.totalPages = totalPages;
         this.totalItems = totalItems;
     }
 
-    public List<T> getRestaurants() {
-        return restaurants;
+    public List<T> getItems() {
+        return items;
     }
 
-    public void setRestaurants(List<T> restaurants) {
-        this.restaurants = restaurants;
+    public void setItems(List<T> items) {
+        this.items = items;
     }
 
     public int getCurrentPage() {

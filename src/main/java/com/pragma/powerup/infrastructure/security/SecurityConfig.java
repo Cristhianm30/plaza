@@ -31,11 +31,11 @@ public class SecurityConfig {
                         ).permitAll()
                         .antMatchers(HttpMethod.POST, "/plaza/restaurant").hasRole("ADMINISTRADOR")
                         .antMatchers(HttpMethod.POST, "/dishes","/dishes/update/{id}","dishes/active/{id}").hasRole("PROPIETARIO")
-                        .antMatchers(HttpMethod.GET, "/plaza/restaurants").permitAll()
+                        .antMatchers(HttpMethod.GET, "/plaza/restaurants","dishes/restaurant/{restaurantId}").hasRole("CLIENTE")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                  .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

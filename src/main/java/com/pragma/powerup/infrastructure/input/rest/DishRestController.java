@@ -5,6 +5,7 @@ import com.pragma.powerup.application.dto.request.DishActiveRequestDto;
 import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
+import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.handler.IDishHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,17 @@ public class DishRestController {
             @RequestHeader("Authorization") String token){
 
         return ResponseEntity.ok(dishHandler.activeDish(id, dishActiveRequestDto, token));
+    }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<PaginationResponseDto<DishResponseDto>> getAllDishesByRestaurant(
+            @PathVariable Long restaurantId,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy) {
+
+        return ResponseEntity.ok(dishHandler.getAllDishesByRestaurant(restaurantId, categoryId, page, size, sortBy));
     }
 
 

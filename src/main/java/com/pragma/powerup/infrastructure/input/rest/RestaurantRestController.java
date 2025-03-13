@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
-import com.pragma.powerup.application.dto.response.RestaurantPaginationResponseDto;
+import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.application.handler.impl.RestaurantHandlerImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,14 @@ public class RestaurantRestController {
     private final RestaurantHandlerImpl restaurantHandler;
 
 
-    @PostMapping("restaurant")
+    @PostMapping("/restaurant")
     public ResponseEntity<RestaurantResponseDto> createRestaurant (@RequestBody RestaurantRequestDto restaurantRequestDto){
         RestaurantResponseDto createdRestaurant = restaurantHandler.createRestaurant(restaurantRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
 
     @GetMapping("/restaurants")
-    public ResponseEntity<RestaurantPaginationResponseDto> getRestaurants(
+    public ResponseEntity<PaginationResponseDto> getRestaurants(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "name") String sortBy) {

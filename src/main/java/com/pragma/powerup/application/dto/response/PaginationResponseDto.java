@@ -12,8 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RestaurantPaginationResponseDto<T> {
-    private List<T> restaurants;
+public class PaginationResponseDto<T> {
+    private List<T> items;
     private int currentPage;
     private int totalPages;
     private long totalItems;

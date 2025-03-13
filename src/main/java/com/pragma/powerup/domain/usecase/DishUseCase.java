@@ -2,6 +2,7 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IDishServicePort;
 import com.pragma.powerup.domain.model.Dish;
+import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IJwtTokenProviderPort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
@@ -52,6 +53,11 @@ public class DishUseCase implements IDishServicePort {
         tokenValidations.validateTokenAndOwnership(token, existingDish.getRestaurant().getId());
         existingDish.setActive(active);
         return dishPersistence.saveDish(existingDish);
+    }
+
+    @Override
+    public Pagination<Dish> getAllDishesByRestaurant(Long restaurantId, Long categoryId, int page, int size, String sortBy) {
+        return dishPersistence.findAllDishesByRestaurant(restaurantId, categoryId, page, size, sortBy);
     }
 
 }

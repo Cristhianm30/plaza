@@ -1,10 +1,10 @@
 package com.pragma.powerup.domain.api;
 
 import com.pragma.powerup.domain.model.Restaurant;
-import com.pragma.powerup.domain.model.RestaurantPagination;
+import com.pragma.powerup.domain.model.Pagination;
 
 public interface IRestaurantServicePort {
     Restaurant createRestaurant (Restaurant restaurant);
-    RestaurantPagination getAllRestaurantsPaginated(int page, int size, String sortBy);
+    Pagination<Restaurant> getAllRestaurantsPaginated(int page, int size, String sortBy);
 
 }

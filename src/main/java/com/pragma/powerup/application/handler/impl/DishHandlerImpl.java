@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.request.DishActiveRequestDto;
 import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
+import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.handler.IDishHandler;
 import com.pragma.powerup.application.mapper.IDishRequestMapper;
 import com.pragma.powerup.application.mapper.IDishResponseMapper;
@@ -12,12 +13,15 @@ import com.pragma.powerup.domain.exception.CategoryNotFoundException;
 import com.pragma.powerup.domain.exception.RestaurantNotFoundException;
 import com.pragma.powerup.domain.model.Category;
 import com.pragma.powerup.domain.model.Dish;
+import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.domain.spi.ICategoryPersistencePort;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -71,6 +75,22 @@ public class DishHandlerImpl implements IDishHandler {
 
         Dish activeDish = dishServicePort.activeDish(id, dishActiveRequestDto.isActive(),cleanedToken);
         return dishResponseMapper.modelToResponse(activeDish);
+    }
+
+    @Override
+    public PaginationResponseDto<DishResponseDto> getAllDishesByRestaurant(Long restaurantId, Long categoryId, int page, int size, String sortBy) {
+        Pagination<Dish> pagination = dishServicePort.getAllDishesByRestaurant(restaurantId, categoryId, page, size, sortBy);
+
+        return PaginationResponseDto.<DishResponseDto>builder()
+                .items(
+                        pagination.getItems().stream()
+                                .map(dishResponseMapper::modelToResponse)
+                                .collect(Collectors.toList())
+                )
+                .currentPage(pagination.getCurrentPage())
+                .totalPages(pagination.getTotalPages())
+                .totalItems(pagination.getTotalItems())
+                .build();
     }
 
 }
