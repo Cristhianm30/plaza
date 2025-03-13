@@ -1,0 +1,163 @@
+Listado de rutas de carpetas
+El número de serie del volumen es C858-BCA4
+C:.
+│   estructura.txt
+│   
+├───main
+│   ├───java
+│   │   │   estructura.txt
+│   │   │   
+│   │   └───com
+│   │       └───pragma
+│   │           └───powerup
+│   │               │   PowerUpApplication.java
+│   │               │   
+│   │               ├───application
+│   │               │   ├───dto
+│   │               │   │   ├───request
+│   │               │   │   │       DishRequestDto.java
+│   │               │   │   │       ObjectRequestDto.java
+│   │               │   │   │       RestaurantRequestDto.java
+│   │               │   │   │       UserRequestDto.java
+│   │               │   │   │       
+│   │               │   │   └───response
+│   │               │   │           DishResponseDto.java
+│   │               │   │           ObjectResponseDto.java
+│   │               │   │           RestaurantResponseDto.java
+│   │               │   │           RoleDto.java
+│   │               │   │           UserResponseDto.java
+│   │               │   │           
+│   │               │   ├───handler
+│   │               │   │   │   IDishHandler.java
+│   │               │   │   │   IObjectHandler.java
+│   │               │   │   │   IRestaurantHandler.java
+│   │               │   │   │   
+│   │               │   │   └───impl
+│   │               │   │           DishHandlerImpl.java
+│   │               │   │           ObjectHandler.java
+│   │               │   │           RestaurantHandlerImpl.java
+│   │               │   │           
+│   │               │   └───mapper
+│   │               │           ICategoryMapper.java
+│   │               │           IDishRequestMapper.java
+│   │               │           IDishResponseMapper.java
+│   │               │           IObjectRequestMapper.java
+│   │               │           IObjectResponseMapper.java
+│   │               │           IRestaurantRequestMapper.java
+│   │               │           IRestaurantResponseMapper.java
+│   │               │           
+│   │               ├───domain
+│   │               │   ├───api
+│   │               │   │       IDishServicePort.java
+│   │               │   │       IObjectServicePort.java
+│   │               │   │       IRestaurantServicePort.java
+│   │               │   │       
+│   │               │   ├───exception
+│   │               │   │       CategoryNotFoundException.java
+│   │               │   │       DomainException.java
+│   │               │   │       InvalidFieldsException.java
+│   │               │   │       InvalidOwnerException.java
+│   │               │   │       InvalidPriceException.java
+│   │               │   │       InvalidRestaurantCellPhoneException.java
+│   │               │   │       InvalidRestaurantNameException.java
+│   │               │   │       InvalidRestaurantNitException.java
+│   │               │   │       InvalidTokenException.java
+│   │               │   │       RestaurantNotFoundException.java
+│   │               │   │       
+│   │               │   ├───model
+│   │               │   │       Category.java
+│   │               │   │       Dish.java
+│   │               │   │       ObjectModel.java
+│   │               │   │       Order.java
+│   │               │   │       Restaurant.java
+│   │               │   │       
+│   │               │   ├───spi
+│   │               │   │       ICategoryPersistencePort.java
+│   │               │   │       IDishPersistencePort.java
+│   │               │   │       IJwtTokenProviderPort.java
+│   │               │   │       IObjectPersistencePort.java
+│   │               │   │       IRestaurantPersistencePort.java
+│   │               │   │       IUserFeignPort.java
+│   │               │   │       
+│   │               │   └───usecase
+│   │               │       │   DishUseCase.java
+│   │               │       │   ObjectUseCase.java
+│   │               │       │   RestaurantUseCase.java
+│   │               │       │   
+│   │               │       └───validations
+│   │               │               DishValidations.java
+│   │               │               RestaurantValidations.java
+│   │               │               
+│   │               └───infrastructure
+│   │                   ├───configuration
+│   │                   │       BeanConfiguration.java
+│   │                   │       
+│   │                   ├───documentation
+│   │                   │       OpenApiConfiguration.java
+│   │                   │       
+│   │                   ├───exception
+│   │                   │       NoDataFoundException.java
+│   │                   │       
+│   │                   ├───exceptionhandler
+│   │                   │       ControllerAdvisor.java
+│   │                   │       ExceptionResponse.java
+│   │                   │       
+│   │                   ├───input
+│   │                   │   └───rest
+│   │                   │           DishRestController.java
+│   │                   │           ObjectRestController.java
+│   │                   │           RestaurantRestController.java
+│   │                   │           
+│   │                   ├───out
+│   │                   │   ├───feign
+│   │                   │   │       IUserFeignClient.java
+│   │                   │   │       UserFeignAdapter.java
+│   │                   │   │       
+│   │                   │   └───jpa
+│   │                   │       ├───adapter
+│   │                   │       │       CategoryJpaAdapter.java
+│   │                   │       │       DishJpaAdapter.java
+│   │                   │       │       ObjectJpaAdapter.java
+│   │                   │       │       RestaurantJpaAdapter.java
+│   │                   │       │       
+│   │                   │       ├───entity
+│   │                   │       │       CategoryEntity.java
+│   │                   │       │       DishEntity.java
+│   │                   │       │       ObjectEntity.java
+│   │                   │       │       OrderDishEntity.java
+│   │                   │       │       OrderEntity.java
+│   │                   │       │       RestaurantEntity.java
+│   │                   │       │       
+│   │                   │       ├───mapper
+│   │                   │       │       ICategoryEntityMapper.java
+│   │                   │       │       IDishEntityMapper.java
+│   │                   │       │       IObjectEntityMapper.java
+│   │                   │       │       IRestaurantEntityMapper.java
+│   │                   │       │       
+│   │                   │       └───repository
+│   │                   │               ICategoryRepository.java
+│   │                   │               IDishRepository.java
+│   │                   │               IObjectRepository.java
+│   │                   │               IRestaurantRepository.java
+│   │                   │               
+│   │                   └───security
+│   │                           JwtAuthenticationFilter.java
+│   │                           JwtTokenProviderAdapter.java
+│   │                           SecurityConfig.java
+│   │                           
+│   └───resources
+│           application.yml
+│           banner.txt
+│           
+└───test
+    └───java
+        └───com
+            └───pragma
+                └───powerup
+                    │   PowerUpApplicationTests.java
+                    │   
+                    └───domain
+                        └───usecase
+                                DishUseCaseTest.java
+                                RestaurantUseCaseTest.java
+                                

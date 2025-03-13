@@ -63,4 +63,29 @@ public class DishUseCase implements IDishServicePort {
         return dishPersistence.saveDish(dish);
     }
 
+    @Override
+    public Dish updateDish(Dish dish, String token) {
+        // Validaciones de seguridad
+        if (!jwtTokenProvider.validateToken(token)) {
+            throw new InvalidTokenException();
+        }
+
+        Long ownerId = jwtTokenProvider.getUserIdFromToken(token);
+        String role = jwtTokenProvider.getRoleFromToken(token);
+
+        if (!"PROPIETARIO".equals(role)) {
+            throw new InvalidOwnerException();
+        }
+
+        // Verificar propiedad
+        Restaurant restaurant = restaurantPersistence.findById(dish.getRestaurant().getId());
+        if (!restaurant.getOwnerId().equals(ownerId)) {
+            throw new InvalidOwnerException();
+        }
+
+        dishValidations.validateDishUpdate(dish);
+
+        return dishPersistence.updateDish(dish);
+    }
+
 }

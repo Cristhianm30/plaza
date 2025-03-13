@@ -4,4 +4,5 @@ import com.pragma.powerup.domain.model.Dish;
 
 public interface IDishServicePort {
     Dish createDish(Dish dish, String token);
+    Dish updateDish (Dish dish, String toke);
 }

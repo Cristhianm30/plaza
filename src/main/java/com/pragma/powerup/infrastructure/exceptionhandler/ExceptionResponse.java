@@ -10,7 +10,8 @@ public enum ExceptionResponse {
     INVALID_PRICE("El precio debe ser un valor entero mayor a 0"),
     INVALID_TOKEN("El token de autenticacion es invalido"),
     RESTAURANT_NOT_FOUND("Restaurante no encontrado"),
-    CATEGORY_NOT_FOUND("Categoria no encontrada");
+    CATEGORY_NOT_FOUND("Categoria no encontrada"),
+    DISH_NOT_FOUND("Plato no encontrado");
 
     private final String message;
 

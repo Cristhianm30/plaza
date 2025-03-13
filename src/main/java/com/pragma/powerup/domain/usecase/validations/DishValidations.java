@@ -12,6 +12,10 @@ public class DishValidations {
         validatePrice(dish);
     }
 
+    public void validateDishUpdate(Dish dish){
+        validatePrice(dish);
+    }
+
 
     private void validateFields(Dish dish) {
 

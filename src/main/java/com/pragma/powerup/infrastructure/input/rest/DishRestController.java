@@ -2,6 +2,7 @@ package com.pragma.powerup.infrastructure.input.rest;
 
 
 import com.pragma.powerup.application.dto.request.DishRequestDto;
+import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
 import com.pragma.powerup.application.handler.IDishHandler;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,14 @@ public class DishRestController {
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.ok(dishHandler.createDish(dishRequest, token));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<DishResponseDto> updateDish(
+            @PathVariable Long id,
+            @RequestBody DishUpdateRequestDto dishUpdateRequest,
+            @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(dishHandler.updateDish(id, dishUpdateRequest, token));
     }
 
 }
