@@ -30,7 +30,7 @@ public class SecurityConfig {
 
                         ).permitAll()
                         .antMatchers(HttpMethod.POST, "/plaza/restaurant").hasRole("ADMINISTRADOR")
-                        .antMatchers(HttpMethod.POST, "/dishes").hasRole("PROPIETARIO")
+                        .antMatchers(HttpMethod.POST, "/dishes","/dishes/{id}").hasRole("PROPIETARIO")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
