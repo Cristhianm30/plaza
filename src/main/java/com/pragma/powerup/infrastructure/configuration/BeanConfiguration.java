@@ -9,6 +9,7 @@ import com.pragma.powerup.domain.usecase.ObjectUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantUseCase;
 import com.pragma.powerup.domain.usecase.validations.DishValidations;
 import com.pragma.powerup.domain.usecase.validations.RestaurantValidations;
+import com.pragma.powerup.domain.usecase.validations.TokenValidations;
 import com.pragma.powerup.infrastructure.out.feign.IUserFeignClient;
 import com.pragma.powerup.infrastructure.out.feign.UserFeignAdapter;
 
@@ -89,14 +90,12 @@ public class BeanConfiguration {
     public IDishServicePort dishServicePort(
             IDishPersistencePort dishPersistencePort,
             DishValidations dishValidations,
-            IJwtTokenProviderPort jwtTokenProvider,
-            IRestaurantPersistencePort restaurantPersistence) {
+            TokenValidations tokenValidations) {
 
         return new DishUseCase(
                 dishPersistencePort,
                 dishValidations,
-                jwtTokenProvider,
-                restaurantPersistence
+                tokenValidations
         );
     }
 
@@ -113,6 +112,14 @@ public class BeanConfiguration {
     @Bean
     public ICategoryPersistencePort categoryPersistencePort() {
         return new CategoryJpaAdapter(categoryEntityMapper, categoryRepository);
+    }
+
+    @Bean
+    public TokenValidations tokenValidations(
+            IJwtTokenProviderPort jwtTokenProvider,
+            IRestaurantPersistencePort restaurantPersistence
+    ) {
+        return new TokenValidations(jwtTokenProvider, restaurantPersistence);
     }
 
 

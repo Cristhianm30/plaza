@@ -1,91 +1,57 @@
 package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IDishServicePort;
-import com.pragma.powerup.domain.exception.InvalidFieldsException;
-import com.pragma.powerup.domain.exception.InvalidOwnerException;
-import com.pragma.powerup.domain.exception.InvalidTokenException;
 import com.pragma.powerup.domain.model.Dish;
-import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IJwtTokenProviderPort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import com.pragma.powerup.domain.usecase.validations.DishValidations;
+import com.pragma.powerup.domain.usecase.validations.TokenValidations;
 
 public class DishUseCase implements IDishServicePort {
 
     private final IDishPersistencePort dishPersistence;
     private final DishValidations dishValidations;
-    private final IJwtTokenProviderPort jwtTokenProvider;
-    private final IRestaurantPersistencePort restaurantPersistence;
+    private final TokenValidations tokenValidations;
 
-    public DishUseCase(IDishPersistencePort dishPersistence, DishValidations dishValidations, IJwtTokenProviderPort jwtTokenProvider, IRestaurantPersistencePort restaurantPersistence) {
+    public DishUseCase(IDishPersistencePort dishPersistence, DishValidations dishValidations, TokenValidations tokenValidations) {
         this.dishPersistence = dishPersistence;
         this.dishValidations = dishValidations;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.restaurantPersistence = restaurantPersistence;
+        this.tokenValidations = tokenValidations;
     }
 
     @Override
     public Dish createDish(Dish dish, String token) {
-        // Validar token
-        if (!jwtTokenProvider.validateToken(token)) {
-            throw new InvalidTokenException();
-        }
-
-        // Extraer datos del token
-        String role = jwtTokenProvider.getRoleFromToken(token);
-        Long ownerId = jwtTokenProvider.getUserIdFromToken(token);
-
-        // Validar rol
-        if (!"PROPIETARIO".equals(role)) {
-            throw new InvalidOwnerException();
-        }
-
-        // Validar que el restaurante y la categoría no sean nulos
-        if (dish.getRestaurant() == null || dish.getRestaurant().getId() == null) {
-            throw new InvalidFieldsException();
-        }
-        if (dish.getCategory() == null || dish.getCategory().getId() == null) {
-            throw new InvalidFieldsException();
-        }
-
-        // Validar propiedad del restaurante
-        Restaurant restaurant = restaurantPersistence.findById(dish.getRestaurant().getId());
-        if (!restaurant.getOwnerId().equals(ownerId)) {
-            throw new InvalidOwnerException();
-        }
-
-        // Validaciones de dominio
+        tokenValidations.validateTokenAndOwnership(token, dish.getRestaurant().getId());
         dish.setActive(true);
         dishValidations.validateDish(dish);
-
-        // Guardar
         return dishPersistence.saveDish(dish);
     }
 
     @Override
-    public Dish updateDish(Dish dish, String token) {
-        // Validaciones de seguridad
-        if (!jwtTokenProvider.validateToken(token)) {
-            throw new InvalidTokenException();
+    public Dish updateDish(Long id, Dish dish, String token) {
+
+        Dish existingDish = dishPersistence.findById(id);
+        tokenValidations.validateTokenAndOwnership(token, existingDish.getRestaurant().getId());
+
+        if (dish.getDescription() != null) {
+            existingDish.setDescription(dish.getDescription());
+        }
+        if (dish.getPrice() != null) {
+            existingDish.setPrice(dish.getPrice());
         }
 
-        Long ownerId = jwtTokenProvider.getUserIdFromToken(token);
-        String role = jwtTokenProvider.getRoleFromToken(token);
+        dishValidations.validateDishUpdate(existingDish);
 
-        if (!"PROPIETARIO".equals(role)) {
-            throw new InvalidOwnerException();
-        }
+        return dishPersistence.saveDish(existingDish);
+    }
 
-        // Verificar propiedad
-        Restaurant restaurant = restaurantPersistence.findById(dish.getRestaurant().getId());
-        if (!restaurant.getOwnerId().equals(ownerId)) {
-            throw new InvalidOwnerException();
-        }
-
-        dishValidations.validateDishUpdate(dish);
-
-        return dishPersistence.updateDish(dish);
+    @Override
+    public Dish activeDish(Long id,boolean active, String token) {
+        Dish existingDish = dishPersistence.findById(id);
+        tokenValidations.validateTokenAndOwnership(token, existingDish.getRestaurant().getId());
+        existingDish.setActive(active);
+        return dishPersistence.saveDish(existingDish);
     }
 
 }

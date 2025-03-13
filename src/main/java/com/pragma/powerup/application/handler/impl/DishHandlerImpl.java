@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.handler.impl;
 
+import com.pragma.powerup.application.dto.request.DishActiveRequestDto;
 import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
@@ -52,22 +53,24 @@ public class DishHandlerImpl implements IDishHandler {
         return dishResponseMapper.modelToResponse(savedDish);
     }
 
+
     @Override
     public DishResponseDto updateDish(Long id, DishUpdateRequestDto dishUpdateRequest, String token) {
+
         String cleanedToken = token.replace("Bearer ", "");
 
-        Dish existingDish = persistencePort.findById(id);
+        Dish update = dishRequestMapper.updaterequestToModel(dishUpdateRequest);
+        Dish updated = dishServicePort.updateDish(id,update,cleanedToken);
+        return dishResponseMapper.modelToResponse(updated);
+    }
 
-        // Actualizar solo campos permitidos
-        if (dishUpdateRequest.getDescription() != null) {
-            existingDish.setDescription(dishUpdateRequest.getDescription());
-        }
-        if (dishUpdateRequest.getPrice() != null) {
-            existingDish.setPrice(dishUpdateRequest.getPrice());
-        }
+    @Override
+    public DishResponseDto activeDish(Long id, DishActiveRequestDto dishActiveRequestDto, String token){
 
-        Dish updatedDish = dishServicePort.updateDish(existingDish, cleanedToken);
-        return dishResponseMapper.modelToResponse(updatedDish);
+        String cleanedToken = token.replace("Bearer ", "");
+
+        Dish activeDish = dishServicePort.activeDish(id, dishActiveRequestDto.isActive(),cleanedToken);
+        return dishResponseMapper.modelToResponse(activeDish);
     }
 
 }
