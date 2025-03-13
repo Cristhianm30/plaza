@@ -3,10 +3,18 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 import com.pragma.powerup.domain.exception.RestaurantNotFoundException;
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
+import com.pragma.powerup.domain.model.RestaurantPagination;
 import com.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
@@ -28,5 +36,23 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
             RestaurantEntity entity = restaurantRepository.findById(id).orElseThrow(RestaurantNotFoundException::new);
             return restaurantEntityMapper.entityToModel(entity);
 
+    }
+
+    @Override
+    public RestaurantPagination findAllPaginated(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, sortBy));
+        Page<RestaurantEntity> entityPage = restaurantRepository.findAll(pageable);
+
+        List<Restaurant> restaurants = entityPage.getContent()
+                .stream()
+                .map(restaurantEntityMapper::entityToModel)
+                .toList();
+
+        return new RestaurantPagination(
+                restaurants,
+                entityPage.getNumber(),
+                entityPage.getTotalPages(),
+                entityPage.getTotalElements()
+        );
     }
 }

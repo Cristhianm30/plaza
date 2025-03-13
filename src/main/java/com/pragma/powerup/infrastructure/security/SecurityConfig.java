@@ -31,6 +31,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .antMatchers(HttpMethod.POST, "/plaza/restaurant").hasRole("ADMINISTRADOR")
                         .antMatchers(HttpMethod.POST, "/dishes","/dishes/update/{id}","dishes/active/{id}").hasRole("PROPIETARIO")
+                        .antMatchers(HttpMethod.GET, "/plaza/restaurants").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
