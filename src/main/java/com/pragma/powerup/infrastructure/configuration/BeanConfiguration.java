@@ -90,12 +90,16 @@ public class BeanConfiguration {
     public IDishServicePort dishServicePort(
             IDishPersistencePort dishPersistencePort,
             DishValidations dishValidations,
-            TokenValidations tokenValidations) {
+            TokenValidations tokenValidations,
+            IRestaurantPersistencePort restaurantPersistencePort,
+            ICategoryPersistencePort categoryPersistencePort) {
 
         return new DishUseCase(
                 dishPersistencePort,
                 dishValidations,
-                tokenValidations
+                tokenValidations,
+                restaurantPersistencePort,
+                categoryPersistencePort
         );
     }
 

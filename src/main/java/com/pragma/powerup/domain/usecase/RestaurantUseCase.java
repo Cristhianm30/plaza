@@ -24,9 +24,7 @@ public class RestaurantUseCase  implements IRestaurantServicePort {
     public Restaurant createRestaurant(Restaurant restaurant){
         restaurantValidations.validateRestaurant(restaurant);
         String userRole = userFeignPort.getUserRole(restaurant.getOwnerId());
-        if (!userRole.equals("PROPIETARIO")) {
-            throw new InvalidOwnerException();
-        }
+        restaurantValidations.validateOwnerRole(userRole);
         return restaurantPersistencePort.save(restaurant);
 
     }

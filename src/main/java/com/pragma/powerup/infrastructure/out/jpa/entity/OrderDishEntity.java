@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "order_dishes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "order_dishes")
 public class OrderDishEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,9 +21,8 @@ public class OrderDishEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dish_id", nullable = false)
-    private DishEntity dish;
+    @Column(nullable = false)
+    private Long dishId;
 
     @Column(nullable = false)
     private Integer quantity;

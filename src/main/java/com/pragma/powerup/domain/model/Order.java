@@ -1,22 +1,24 @@
 package com.pragma.powerup.domain.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class Order {
     private Long id;
     private Long clientId;
-    private LocalDate date;
+    private Long restaurantId;
     private String status;
-    private Long chefId;
-    private Restaurant restaurant;
+    private LocalDateTime date;
+    private List<OrderDish> dishes;
 
-    public Order(LocalDate date, Long id, Long clientId, String status, Long chefId, Restaurant restaurant) {
-        this.date = date;
+    public Order(Long id, Long clientId, Long restaurantId, String status, LocalDateTime date, List<OrderDish> dishes) {
         this.id = id;
         this.clientId = clientId;
+        this.restaurantId = restaurantId;
         this.status = status;
-        this.chefId = chefId;
-        this.restaurant = restaurant;
+        this.date = date;
+        this.dishes = dishes;
     }
 
     public Long getId() {
@@ -35,12 +37,12 @@ public class Order {
         this.clientId = clientId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Long getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public String getStatus() {
@@ -51,19 +53,20 @@ public class Order {
         this.status = status;
     }
 
-    public Long getChefId() {
-        return chefId;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setChefId(Long chefId) {
-        this.chefId = chefId;
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public List<OrderDish> getDishes() {
+        return dishes;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setDishes(List<OrderDish> dishes) {
+        this.dishes = dishes;
     }
 }
+

@@ -17,29 +17,23 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class OrderEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Long clientId;
 
     @Column(nullable = false)
     private String status;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime date;
 
-    private LocalDateTime updatedAt;
-
-    @Column(nullable = false)
-    private Long clientId;
-
-    private Long chefId;  // Nullable hasta asignación
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDishEntity> dishes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private RestaurantEntity restaurant;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderDishEntity> orderDishes = new ArrayList<>();
 }

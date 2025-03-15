@@ -36,4 +36,8 @@ public class TokenValidations {
             throw new InvalidOwnerException();
         }
     }
+
+    public String  cleanedToken (String token){
+        return token.replace("Bearer ", "");
+    }
 }

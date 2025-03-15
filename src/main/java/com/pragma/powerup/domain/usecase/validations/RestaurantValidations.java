@@ -1,9 +1,6 @@
 package com.pragma.powerup.domain.usecase.validations;
 
-import com.pragma.powerup.domain.exception.InvalidRestaurantCellPhoneException;
-import com.pragma.powerup.domain.exception.InvalidRestaurantNameException;
-import com.pragma.powerup.domain.exception.InvalidRestaurantNitException;
-import com.pragma.powerup.domain.exception.InvalidFieldsException;
+import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.domain.model.Restaurant;
 
 public class RestaurantValidations {
@@ -14,6 +11,12 @@ public class RestaurantValidations {
         validateNit(restaurant);
         validateName(restaurant);
         validateCellPhone(restaurant);
+    }
+
+    public void validateOwnerRole(String role){
+        if (!role.equals("PROPIETARIO")) {
+            throw new InvalidOwnerException();
+        }
     }
 
 
@@ -59,6 +62,8 @@ public class RestaurantValidations {
             throw new InvalidRestaurantNameException();
         }
     }
+
+
 
 
 

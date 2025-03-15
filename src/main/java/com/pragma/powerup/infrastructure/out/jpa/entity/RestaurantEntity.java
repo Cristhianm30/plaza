@@ -21,7 +21,7 @@ public class RestaurantEntity {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String nit;  // Requerido según tu código actual
+    private String nit;
 
     @Column(nullable = false)
     private String name;
@@ -41,8 +41,6 @@ public class RestaurantEntity {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<DishEntity> dishes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "restaurant")
-    private List<OrderEntity> orders = new ArrayList<>();
 
 
 
