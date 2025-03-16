@@ -7,6 +7,7 @@ import com.pragma.powerup.application.mapper.IOrderRequestMapper;
 import com.pragma.powerup.application.mapper.IOrderResponseMapper;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.model.Order;
+import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,10 @@ public class OrderHandlerImpl implements IOrderHandler {
         Order response = orderServicePort.createOrder(order,token);
         return orderResponseMapper.toResponse(response);
 
+    }
+
+    @Override
+    public Pagination<OrderResponseDto> getOrderByStatus(String status, int page, int size, String token) {
+        return null;
     }
 }

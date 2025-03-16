@@ -23,6 +23,9 @@ public class OrderEntity {
     @Column(nullable = false)
     private Long clientId;
 
+    @Column
+    private Long chefId;
+
     @Column(nullable = false)
     private String status;
 

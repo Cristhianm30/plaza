@@ -7,19 +7,25 @@ import java.util.List;
 public class Order {
     private Long id;
     private Long clientId;
+    private Long chefId;
     private Restaurant restaurant;
     private String status;
     private LocalDateTime date;
     private List<OrderDish> dishes;
 
-    public Order(Long id, Long clientId, Restaurant restaurant, String status, LocalDateTime date, List<OrderDish> dishes) {
+    public Order(Long id, Long clientId,Long chefId, Restaurant restaurant, String status, LocalDateTime date, List<OrderDish> dishes) {
         this.id = id;
         this.clientId = clientId;
+        this.chefId =chefId;
         this.restaurant = restaurant;
         this.status = status;
         this.date = date;
         this.dishes = dishes;
     }
+
+    public Long getChefId() {return chefId;}
+
+    public void setChefId(Long chefId) {this.chefId = chefId;}
 
     public Long getId() {
         return id;

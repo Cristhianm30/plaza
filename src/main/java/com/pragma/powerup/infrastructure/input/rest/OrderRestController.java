@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.request.OrderRequestDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
 import com.pragma.powerup.domain.api.IOrderServicePort;
+import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.spi.IJwtTokenProviderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,4 +27,14 @@ public class OrderRestController {
     ) {
         return ResponseEntity.ok(orderHandler.createOrder(orderRequest, token));
     }
+
+//    @GetMapping("/list")
+//    public ResponseEntity<Pagination<OrderResponseDto>> getOrderByStatus(
+//            @RequestParam String status,
+//            @RequestParam int page,
+//            @RequestParam int size,
+//            @RequestHeader("Authorization") String token
+//    ){
+//        return ResponseEntity.ok(orderHandler.getOrdersByStatus(status,page,size,token));
+//    }
 }

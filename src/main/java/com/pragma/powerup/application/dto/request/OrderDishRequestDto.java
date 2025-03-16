@@ -1,10 +1,11 @@
 package com.pragma.powerup.application.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderDishRequestDto {
     private Long dishId;
     private Integer quantity;

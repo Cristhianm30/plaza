@@ -1,14 +1,17 @@
 package com.pragma.powerup.application.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderResponseDto {
     private Long id;
     private Long restaurantId;
+    private Long chefId;
     private String status;
     private LocalDateTime date;
 }
