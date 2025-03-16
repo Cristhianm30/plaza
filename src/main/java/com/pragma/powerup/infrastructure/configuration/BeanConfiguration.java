@@ -2,29 +2,23 @@ package com.pragma.powerup.infrastructure.configuration;
 
 import com.pragma.powerup.domain.api.IDishServicePort;
 import com.pragma.powerup.domain.api.IObjectServicePort;
+import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.domain.spi.*;
 import com.pragma.powerup.domain.usecase.DishUseCase;
 import com.pragma.powerup.domain.usecase.ObjectUseCase;
+import com.pragma.powerup.domain.usecase.OrderUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantUseCase;
 import com.pragma.powerup.domain.usecase.validations.DishValidations;
+import com.pragma.powerup.domain.usecase.validations.OrderValidations;
 import com.pragma.powerup.domain.usecase.validations.RestaurantValidations;
 import com.pragma.powerup.domain.usecase.validations.TokenValidations;
 import com.pragma.powerup.infrastructure.out.feign.IUserFeignClient;
 import com.pragma.powerup.infrastructure.out.feign.UserFeignAdapter;
 
-import com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter;
-import com.pragma.powerup.infrastructure.out.jpa.adapter.DishJpaAdapter;
-import com.pragma.powerup.infrastructure.out.jpa.adapter.ObjectJpaAdapter;
-import com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter;
-import com.pragma.powerup.infrastructure.out.jpa.mapper.ICategoryEntityMapper;
-import com.pragma.powerup.infrastructure.out.jpa.mapper.IDishEntityMapper;
-import com.pragma.powerup.infrastructure.out.jpa.mapper.IObjectEntityMapper;
-import com.pragma.powerup.infrastructure.out.jpa.mapper.IRestaurantEntityMapper;
-import com.pragma.powerup.infrastructure.out.jpa.repository.ICategoryRepository;
-import com.pragma.powerup.infrastructure.out.jpa.repository.IDishRepository;
-import com.pragma.powerup.infrastructure.out.jpa.repository.IObjectRepository;
-import com.pragma.powerup.infrastructure.out.jpa.repository.IRestaurantRepository;
+import com.pragma.powerup.infrastructure.out.jpa.adapter.*;
+import com.pragma.powerup.infrastructure.out.jpa.mapper.*;
+import com.pragma.powerup.infrastructure.out.jpa.repository.*;
 
 import com.pragma.powerup.infrastructure.security.JwtTokenProviderAdapter;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +37,8 @@ public class BeanConfiguration {
     private final IDishRepository dishRepository;
     private final ICategoryRepository categoryRepository;
     private final ICategoryEntityMapper categoryEntityMapper;
+    private final IOrderRepository orderRepository;
+    private final IOrderEntityMapper orderEntityMapper;
 
 
 
@@ -125,6 +121,29 @@ public class BeanConfiguration {
     ) {
         return new TokenValidations(jwtTokenProvider, restaurantPersistence);
     }
+
+    @Bean
+    public IOrderServicePort orderServicePort(
+            IOrderPersistencePort orderPersistencePort,
+            TokenValidations tokenValidations,
+            OrderValidations orderValidations){
+        return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations);
+    }
+
+    @Bean
+    public IOrderPersistencePort orderPersistencePort(){
+        return new OrderJpaAdapter(orderRepository,orderEntityMapper);
+    }
+
+    @Bean
+    public OrderValidations orderValidations(
+            IOrderPersistencePort orderPersistence,
+            IDishPersistencePort dishPersistence
+    ) {
+        return new OrderValidations(orderPersistence, dishPersistence);
+    }
+
+
 
 
 

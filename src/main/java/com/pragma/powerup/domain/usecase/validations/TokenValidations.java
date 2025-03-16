@@ -40,4 +40,8 @@ public class TokenValidations {
     public String  cleanedToken (String token){
         return token.replace("Bearer ", "");
     }
+
+    public Long getUserIdFromToken (String token){
+        return jwtTokenProvider.getUserIdFromToken(token);
+    }
 }

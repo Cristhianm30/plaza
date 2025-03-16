@@ -91,5 +91,19 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.DISH_NOT_FOUND.getMessage()));
     }
+
+    @ExceptionHandler(HasActiveOrderException.class)
+    public ResponseEntity<Map<String, String>> hasActiveOrderException(
+            HasActiveOrderException hasActiveOrderException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.HAS_ACTIVE_ORDER.getMessage()));
+    }
+
+    @ExceptionHandler(MultipleRestaurantsException.class)
+    public ResponseEntity<Map<String, String>> multipleRestaurantsException(
+            MultipleRestaurantsException multipleRestaurantsException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.MULTIPLE_RESTAURANT.getMessage()));
+    }
     
 }

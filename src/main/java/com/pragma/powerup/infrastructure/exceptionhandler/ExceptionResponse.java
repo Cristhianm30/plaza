@@ -11,7 +11,9 @@ public enum ExceptionResponse {
     INVALID_TOKEN("El token de autenticacion es invalido"),
     RESTAURANT_NOT_FOUND("Restaurante no encontrado"),
     CATEGORY_NOT_FOUND("Categoria no encontrada"),
-    DISH_NOT_FOUND("Plato no encontrado");
+    DISH_NOT_FOUND("Plato no encontrado"),
+    HAS_ACTIVE_ORDER("El clienta ya tiene una orden activa"),
+    MULTIPLE_RESTAURANT("El pedido no puede contener platos de diferentes Restaurantes");
 
     private final String message;
 

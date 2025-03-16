@@ -1,21 +1,21 @@
 package com.pragma.powerup.domain.model;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
     private Long id;
     private Long clientId;
-    private Long restaurantId;
+    private Restaurant restaurant;
     private String status;
     private LocalDateTime date;
     private List<OrderDish> dishes;
 
-    public Order(Long id, Long clientId, Long restaurantId, String status, LocalDateTime date, List<OrderDish> dishes) {
+    public Order(Long id, Long clientId, Restaurant restaurant, String status, LocalDateTime date, List<OrderDish> dishes) {
         this.id = id;
         this.clientId = clientId;
-        this.restaurantId = restaurantId;
+        this.restaurant = restaurant;
         this.status = status;
         this.date = date;
         this.dishes = dishes;
@@ -37,12 +37,12 @@ public class Order {
         this.clientId = clientId;
     }
 
-    public Long getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public String getStatus() {

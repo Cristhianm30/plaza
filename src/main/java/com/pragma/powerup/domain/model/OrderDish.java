@@ -1,21 +1,31 @@
 package com.pragma.powerup.domain.model;
 
 public class OrderDish {
-
-    private Long dishId;
+    private Long id;
+    private Dish dish;
     private Integer quantity;
 
-    public OrderDish(Long dishId, Integer quantity) {
-        this.dishId = dishId;
+
+    public OrderDish(Long id, Dish dish, Integer quantity) {
+        this.id = id;
+        this.dish = dish;
         this.quantity = quantity;
     }
 
-    public Long getDishId() {
-        return dishId;
+    public Long getId() {
+        return id;
     }
 
-    public void setDishId(Long dishId) {
-        this.dishId = dishId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Dish getDish() {
+        return dish;
+    }
+
+    public void setDish(Dish dish) {
+        this.dish = dish;
     }
 
     public Integer getQuantity() {
