@@ -16,7 +16,7 @@ public class Order {
     public Order(Long id, Long clientId,Long chefId, Restaurant restaurant, String status, LocalDateTime date, List<OrderDish> dishes) {
         this.id = id;
         this.clientId = clientId;
-        this.chefId =chefId;
+        this.chefId = chefId;
         this.restaurant = restaurant;
         this.status = status;
         this.date = date;

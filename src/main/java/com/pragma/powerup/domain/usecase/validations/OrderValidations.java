@@ -1,9 +1,6 @@
 package com.pragma.powerup.domain.usecase.validations;
 
-import com.pragma.powerup.domain.exception.DomainException;
-import com.pragma.powerup.domain.exception.HasActiveOrderException;
-import com.pragma.powerup.domain.exception.InvalidEmployeeException;
-import com.pragma.powerup.domain.exception.MultipleRestaurantsException;
+import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.domain.model.Dish;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
@@ -39,6 +36,12 @@ public class OrderValidations {
     public void validateEmployeeRole(String role) {
         if (role == null || !role.equals("EMPLEADO")) {
             throw new InvalidEmployeeException();
+        }
+    }
+
+    public void validateRestaurantEmployee (Long restaurantId,Long employeeRestaurantId){
+        if (!restaurantId.equals(employeeRestaurantId)){
+            throw new InvalidRestaurantEmployeeException();
         }
     }
 }

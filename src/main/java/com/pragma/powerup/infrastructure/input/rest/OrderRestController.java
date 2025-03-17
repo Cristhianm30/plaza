@@ -26,7 +26,8 @@ public class OrderRestController {
             @RequestBody OrderRequestDto orderRequest,
             @RequestHeader("Authorization") String token
     ) {
-        return ResponseEntity.ok(orderHandler.createOrder(orderRequest, token));
+        OrderResponseDto response = orderHandler.createOrder(orderRequest, token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/list")
@@ -38,4 +39,14 @@ public class OrderRestController {
     ){
         return ResponseEntity.ok(orderHandler.getOrderByStatus(status,page,size,token));
     }
+
+    @PatchMapping("/employee/{orderId}")
+    public ResponseEntity<OrderResponseDto> assignEmployeeToOrder(
+            @PathVariable("orderId") Long orderId,
+            @RequestHeader("Authorization") String token
+    ){
+        return ResponseEntity.ok(orderHandler.assignEmployeeToOrder(orderId,token));
+    }
+
+
 }

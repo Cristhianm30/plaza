@@ -51,4 +51,12 @@ public class OrderHandlerImpl implements IOrderHandler {
                 .totalItems(pagination.getTotalItems())
                 .build();
     }
+
+    @Override
+    public OrderResponseDto assignEmployeeToOrder(Long orderId, String token) {
+
+        Order assign = orderServicePort.assignEmployeeToOrder(orderId,token);
+
+        return orderResponseMapper.toResponse(assign);
+    }
 }

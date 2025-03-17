@@ -7,5 +7,6 @@ public interface IOrderPersistencePort {
     Order saveOrder(Order order);
     boolean existsActiveOrder(Long clientId);
     Pagination<Order> getOrdersByStatusAndRestaurant(String status, Long restaurantId, int page, int size);
+    Order findById (Long id);
 
 }

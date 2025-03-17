@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.POST, "/plaza/restaurant").hasRole("ADMINISTRADOR")
                         .antMatchers(HttpMethod.POST, "/dishes","/dishes/update/{id}","dishes/active/{id}","/plaza/employee/{restaurantId}").hasRole("PROPIETARIO")
                         .antMatchers(HttpMethod.GET, "/plaza/restaurants","dishes/restaurant/{restaurantId}","/orders").hasRole("CLIENTE")
-                        .antMatchers(HttpMethod.GET, "/orders/list").hasRole("EMPLEADO")
+                        .antMatchers(HttpMethod.GET, "/orders/list","orders/employee/{orderId}").hasRole("EMPLEADO")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -15,7 +15,8 @@ public enum ExceptionResponse {
     HAS_ACTIVE_ORDER("El clienta ya tiene una orden activa"),
     MULTIPLE_RESTAURANT("El pedido no puede contener platos de diferentes Restaurantes"),
     INVALID_EMPLOYEE_ID("El ID del usuario no corresponde con el rol empleado"),
-    INVALID_RESTAURANT_OWNER("El propietario no corresponde con el ID del restaurante");
+    INVALID_RESTAURANT_OWNER("El propietario no corresponde con el ID del restaurante"),
+    INVALID_RESTAURANT_EMPLOYEE("El empleado no corresponde con el ID del restaurante");
 
     private final String message;
 

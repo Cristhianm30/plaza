@@ -57,10 +57,32 @@ public class OrderUseCase implements IOrderServicePort {
         String cleanedToken = tokenValidations.cleanedToken(token);
         Long employeeId = tokenValidations.getUserIdFromToken(cleanedToken);
         String userRole = userFeignPort.getUserRole(employeeId);
-        orderValidations.validateEmployeeRole(userRole);
+        orderValidations.validateEmployeeRole(userRole); //validacion innecesaria por el springSecurity :/
         EmployeeRestaurant employee = employeeRestaurantPersistencePort.findByEmployeeId(employeeId);
         Long restaurantId = employee.getRestaurantId();
 
         return orderPersistencePort.getOrdersByStatusAndRestaurant(status,restaurantId,page,size);
+    }
+
+    @Override
+    public Order assignEmployeeToOrder(Long orderId, String token) {
+
+        String cleanedToken = tokenValidations.cleanedToken(token);
+        Long employeeId = tokenValidations.getUserIdFromToken(cleanedToken);
+
+        Order order = orderPersistencePort.findById(orderId);
+
+        Long restaurantId = order.getRestaurant().getId();
+        EmployeeRestaurant employee = employeeRestaurantPersistencePort.findByEmployeeId(employeeId);
+        Long employeeRestaurantId = employee.getRestaurantId();
+        orderValidations.validateRestaurantEmployee(restaurantId,employeeRestaurantId);
+
+        
+
+        order.setStatus("EN_PREPARACION");
+        order.setChefId(employeeId);
+
+        return orderPersistencePort.saveOrder(order);
+
     }
 }

@@ -119,5 +119,12 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_RESTAURANT_OWNER.getMessage()));
     }
+
+    @ExceptionHandler(InvalidRestaurantEmployeeException.class)
+    public ResponseEntity<Map<String, String>> invalidRestaurantEmployeeException(
+            InvalidRestaurantEmployeeException invalidRestaurantEmployeeException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_RESTAURANT_EMPLOYEE.getMessage()));
+    }
     
 }
