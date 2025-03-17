@@ -105,5 +105,19 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.MULTIPLE_RESTAURANT.getMessage()));
     }
+
+    @ExceptionHandler(InvalidEmployeeException.class)
+    public ResponseEntity<Map<String, String>> invalidEmployeeException(
+            InvalidEmployeeException invalidEmployeeException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_EMPLOYEE_ID.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidRestaurantOwnerException.class)
+    public ResponseEntity<Map<String, String>> invalidRestaurantOwnerException(
+            InvalidRestaurantOwnerException invalidRestaurantOwnerException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_RESTAURANT_OWNER.getMessage()));
+    }
     
 }

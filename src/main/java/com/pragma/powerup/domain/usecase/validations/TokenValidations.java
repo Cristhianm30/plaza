@@ -1,6 +1,7 @@
 package com.pragma.powerup.domain.usecase.validations;
 
 import com.pragma.powerup.domain.exception.InvalidOwnerException;
+import com.pragma.powerup.domain.exception.InvalidRestaurantOwnerException;
 import com.pragma.powerup.domain.exception.InvalidTokenException;
 import com.pragma.powerup.domain.model.Restaurant;
 import com.pragma.powerup.domain.spi.IJwtTokenProviderPort;
@@ -33,7 +34,7 @@ public class TokenValidations {
         // Validar propiedad del restaurante
         Restaurant restaurant = restaurantPersistence.findById(restaurantId);
         if (!restaurant.getOwnerId().equals(ownerId)) {
-            throw new InvalidOwnerException();
+            throw new InvalidRestaurantOwnerException();
         }
     }
 

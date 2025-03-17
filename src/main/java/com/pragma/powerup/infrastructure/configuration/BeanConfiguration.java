@@ -39,6 +39,8 @@ public class BeanConfiguration {
     private final ICategoryEntityMapper categoryEntityMapper;
     private final IOrderRepository orderRepository;
     private final IOrderEntityMapper orderEntityMapper;
+    private final IEmployeeRestaurantRepository employeeRestaurantRepository;
+    private final IEmployeeRestaurantEntityMapper employeeRestaurantEntityMapper;
 
 
 
@@ -62,9 +64,12 @@ public class BeanConfiguration {
     @Bean
     public IRestaurantServicePort iRestaurantServicePort(
             IRestaurantPersistencePort restaurantPersistencePort,
-            IUserFeignPort userFeignPort,RestaurantValidations restaurantValidations
+            IUserFeignPort userFeignPort,
+            RestaurantValidations restaurantValidations,
+            TokenValidations tokenValidations,
+            IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort
     ) {
-        return new RestaurantUseCase(restaurantPersistencePort,restaurantValidations, userFeignPort);
+        return new RestaurantUseCase(restaurantPersistencePort,restaurantValidations, userFeignPort, tokenValidations,employeeRestaurantPersistencePort);
     }
 
     @Bean
@@ -141,6 +146,11 @@ public class BeanConfiguration {
             IDishPersistencePort dishPersistence
     ) {
         return new OrderValidations(orderPersistence, dishPersistence);
+    }
+
+    @Bean
+    public IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort(){
+        return new EmployeeRestaurantJpaAdapter(employeeRestaurantRepository,employeeRestaurantEntityMapper);
     }
 
 

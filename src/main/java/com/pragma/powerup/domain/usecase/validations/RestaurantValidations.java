@@ -19,6 +19,12 @@ public class RestaurantValidations {
         }
     }
 
+    public void validateEmployeeRole(String role){
+        if (!role.equals("EMPLEADO")) {
+            throw new InvalidEmployeeException();
+        }
+    }
+
 
     private void validateFields(Restaurant restaurant) {
 
@@ -62,6 +68,9 @@ public class RestaurantValidations {
             throw new InvalidRestaurantNameException();
         }
     }
+
+
+
 
 
 
