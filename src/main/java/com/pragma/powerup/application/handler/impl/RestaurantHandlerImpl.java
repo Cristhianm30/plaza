@@ -43,7 +43,7 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
         return PaginationResponseDto.<RestaurantItemResponseDto>builder()
                 .items(
                         pagination.getItems().stream()
-                                .map(restaurant -> restaurantResponseMapper.modelToItemDto(restaurant))
+                                .map(restaurantResponseMapper::modelToItemDto)
                                 .collect(Collectors.toList())
                 )
                 .currentPage(pagination.getCurrentPage())

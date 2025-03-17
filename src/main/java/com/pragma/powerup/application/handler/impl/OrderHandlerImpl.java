@@ -2,6 +2,7 @@ package com.pragma.powerup.application.handler.impl;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
+import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
 import com.pragma.powerup.application.mapper.IOrderRequestMapper;
 import com.pragma.powerup.application.mapper.IOrderResponseMapper;
@@ -12,6 +13,8 @@ import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +36,19 @@ public class OrderHandlerImpl implements IOrderHandler {
     }
 
     @Override
-    public Pagination<OrderResponseDto> getOrderByStatus(String status, int page, int size, String token) {
-        return null;
+    public PaginationResponseDto<OrderResponseDto> getOrderByStatus(String status, int page, int size, String token) {
+
+        Pagination<Order> pagination = orderServicePort.getAllOrdersPaginated(status, page,size,token);
+
+        return PaginationResponseDto.<OrderResponseDto>builder()
+                .items(
+                        pagination.getItems().stream()
+                                .map(orderResponseMapper::toResponse)
+                                .collect(Collectors.toList())
+                )
+                .currentPage(pagination.getCurrentPage())
+                .totalPages(pagination.getTotalPages())
+                .totalItems(pagination.getTotalItems())
+                .build();
     }
 }

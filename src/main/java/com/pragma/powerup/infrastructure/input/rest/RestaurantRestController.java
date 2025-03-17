@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.request.AssignEmployeeRequestDto;
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
 import com.pragma.powerup.application.dto.response.AssignEmployeeResponseDto;
 import com.pragma.powerup.application.dto.response.PaginationResponseDto;
+import com.pragma.powerup.application.dto.response.RestaurantItemResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.application.handler.impl.RestaurantHandlerImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class RestaurantRestController {
     }
 
     @GetMapping("/restaurants")
-    public ResponseEntity<PaginationResponseDto> getRestaurants(
+    public ResponseEntity<PaginationResponseDto<RestaurantItemResponseDto>> getRestaurants(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "name") String sortBy) {

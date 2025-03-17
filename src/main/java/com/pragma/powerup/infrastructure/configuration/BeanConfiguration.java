@@ -131,8 +131,11 @@ public class BeanConfiguration {
     public IOrderServicePort orderServicePort(
             IOrderPersistencePort orderPersistencePort,
             TokenValidations tokenValidations,
-            OrderValidations orderValidations){
-        return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations);
+            OrderValidations orderValidations,
+            IUserFeignPort userFeignPort,
+            IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort
+    ){
+        return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations,userFeignPort,employeeRestaurantPersistencePort);
     }
 
     @Bean

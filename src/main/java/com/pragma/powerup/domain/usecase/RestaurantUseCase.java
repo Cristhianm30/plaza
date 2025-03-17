@@ -29,6 +29,7 @@ public class RestaurantUseCase  implements IRestaurantServicePort {
 
     @Override
     public Restaurant createRestaurant(Restaurant restaurant){
+
         restaurantValidations.validateRestaurant(restaurant);
         String userRole = userFeignPort.getUserRole(restaurant.getOwnerId());
         restaurantValidations.validateOwnerRole(userRole);

@@ -2,6 +2,7 @@ package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
+import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.model.Pagination;
@@ -28,13 +29,13 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.createOrder(orderRequest, token));
     }
 
-//    @GetMapping("/list")
-//    public ResponseEntity<Pagination<OrderResponseDto>> getOrderByStatus(
-//            @RequestParam String status,
-//            @RequestParam int page,
-//            @RequestParam int size,
-//            @RequestHeader("Authorization") String token
-//    ){
-//        return ResponseEntity.ok(orderHandler.getOrdersByStatus(status,page,size,token));
-//    }
+    @GetMapping("/list")
+    public ResponseEntity<PaginationResponseDto<OrderResponseDto>> getOrderByStatus(
+            @RequestParam String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestHeader("Authorization") String token
+    ){
+        return ResponseEntity.ok(orderHandler.getOrderByStatus(status,page,size,token));
+    }
 }
