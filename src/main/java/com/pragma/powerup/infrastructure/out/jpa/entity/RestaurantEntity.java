@@ -35,7 +35,7 @@ public class RestaurantEntity {
     @Column(nullable = false)
     private String logoUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long ownerId;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)

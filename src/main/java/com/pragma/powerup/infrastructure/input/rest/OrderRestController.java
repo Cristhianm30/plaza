@@ -31,7 +31,7 @@ public class OrderRestController {
 
     @GetMapping("/list")
     public ResponseEntity<PaginationResponseDto<OrderResponseDto>> getOrderByStatus(
-            @RequestParam String status,
+            @RequestParam(defaultValue = "PENDIENTE") String status,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestHeader("Authorization") String token

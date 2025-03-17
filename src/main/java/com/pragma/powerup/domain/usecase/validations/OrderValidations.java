@@ -36,8 +36,8 @@ public class OrderValidations {
         });
     }
 
-    public void validateEmployeeRole(String role){
-        if (!role.equals("EMPLEADO")) {
+    public void validateEmployeeRole(String role) {
+        if (role == null || !role.equals("EMPLEADO")) {
             throw new InvalidEmployeeException();
         }
     }
