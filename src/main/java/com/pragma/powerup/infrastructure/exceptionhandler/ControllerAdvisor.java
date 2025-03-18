@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
 import com.pragma.powerup.domain.exception.*;
-import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
+import com.pragma.powerup.infrastructure.exception.RelationEmployeeRestaurantException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,11 +15,11 @@ public class ControllerAdvisor {
 
     private static final String MESSAGE = "message";
 
-    @ExceptionHandler(NoDataFoundException.class)
+    @ExceptionHandler(RelationEmployeeRestaurantException.class)
     public ResponseEntity<Map<String, String>> handleNoDataFoundException(
-            NoDataFoundException ignoredNoDataFoundException) {
+            RelationEmployeeRestaurantException ignoredRelationEmployeeRestaurantException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.EMPLOYEE_RELATION_NOT_FOUND.getMessage()));
     }
 
     @ExceptionHandler(InvalidFieldsException.class)

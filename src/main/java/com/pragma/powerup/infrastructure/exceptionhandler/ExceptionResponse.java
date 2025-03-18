@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
 public enum ExceptionResponse {
-    NO_DATA_FOUND("No se encontro el registro de la petición"),
+    EMPLOYEE_RELATION_NOT_FOUND("No se encontro la relacion empleado/restaurante"),
     INVALID_FIELDS("Faltan campos obligatorios para la petición"),
     INVALID_RESTAURANT_NAME("Nombre del restaurante invalido"),
     INVALID_RESTAURANT_CELLPHONE("Celular de restaurante invalido"),

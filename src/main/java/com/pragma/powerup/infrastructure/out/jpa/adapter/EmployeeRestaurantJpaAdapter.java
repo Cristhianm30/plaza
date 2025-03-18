@@ -2,7 +2,7 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
 import com.pragma.powerup.domain.model.EmployeeRestaurant;
 import com.pragma.powerup.domain.spi.IEmployeeRestaurantPersistencePort;
-import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
+import com.pragma.powerup.infrastructure.exception.RelationEmployeeRestaurantException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.EmployeeRestaurantEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IEmployeeRestaurantEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IEmployeeRestaurantRepository;
@@ -23,7 +23,7 @@ public class EmployeeRestaurantJpaAdapter implements IEmployeeRestaurantPersiste
 
     @Override
     public EmployeeRestaurant findByEmployeeId(Long employeeId) {
-        EmployeeRestaurantEntity  entity = employeeRestaurantRepository.findByEmployeeId(employeeId).orElseThrow(NoDataFoundException::new);
+        EmployeeRestaurantEntity  entity = employeeRestaurantRepository.findByEmployeeId(employeeId).orElseThrow(RelationEmployeeRestaurantException::new);
         return employeeRestaurantEntityMapper.entityToModel(entity);
     }
 }

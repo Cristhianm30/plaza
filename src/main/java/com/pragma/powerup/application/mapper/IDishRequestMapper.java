@@ -12,6 +12,7 @@ import org.mapstruct.ReportingPolicy;
 public interface IDishRequestMapper {
 
     Dish requestToModel(DishRequestDto dishRequestDto);
+
     Dish updaterequestToModel (DishUpdateRequestDto dishUpdateRequestDto);
 
 }

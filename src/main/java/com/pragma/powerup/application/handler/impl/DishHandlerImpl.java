@@ -9,9 +9,13 @@ import com.pragma.powerup.application.handler.IDishHandler;
 import com.pragma.powerup.application.mapper.IDishRequestMapper;
 import com.pragma.powerup.application.mapper.IDishResponseMapper;
 import com.pragma.powerup.domain.api.IDishServicePort;
+import com.pragma.powerup.domain.model.Category;
 import com.pragma.powerup.domain.model.Dish;
 import com.pragma.powerup.domain.model.Pagination;
 
+import com.pragma.powerup.domain.model.Restaurant;
+import com.pragma.powerup.domain.spi.ICategoryPersistencePort;
+import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +28,22 @@ public class DishHandlerImpl implements IDishHandler {
     private final IDishRequestMapper dishRequestMapper;
     private final IDishResponseMapper dishResponseMapper;
     private final IDishServicePort dishServicePort;
+    private final IRestaurantPersistencePort restaurantPersistencePort;
+    private final ICategoryPersistencePort categoryPersistencePort;
+
 
 
     @Override
     public DishResponseDto createDish(DishRequestDto dishRequest, String token) {
 
+        Restaurant restaurant = restaurantPersistencePort.findById(dishRequest.getRestaurantId());
+        Category category = categoryPersistencePort.findById(dishRequest.getCategoryId());
+
         Dish dish = dishRequestMapper.requestToModel(dishRequest);
+
+        dish.setCategory(category);
+        dish.setRestaurant(restaurant);
+
         Dish savedDish = dishServicePort.createDish(dish,token);
 
         return dishResponseMapper.modelToResponse(savedDish);

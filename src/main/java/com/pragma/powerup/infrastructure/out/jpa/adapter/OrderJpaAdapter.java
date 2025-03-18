@@ -3,7 +3,7 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.spi.IOrderPersistencePort;
-import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
+import com.pragma.powerup.infrastructure.exception.RelationEmployeeRestaurantException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.OrderEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IOrderEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IOrderRepository;
@@ -54,7 +54,7 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
 
     @Override
     public Order findById(Long id) {
-        OrderEntity entity = orderRepository.findById(id).orElseThrow(NoDataFoundException::new);
+        OrderEntity entity = orderRepository.findById(id).orElseThrow(RelationEmployeeRestaurantException::new);
         return orderEntityMapper.toModel(entity);
     }
 }

@@ -1,12 +1,10 @@
 package com.pragma.powerup.infrastructure.configuration;
 
 import com.pragma.powerup.domain.api.IDishServicePort;
-import com.pragma.powerup.domain.api.IObjectServicePort;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.domain.spi.*;
 import com.pragma.powerup.domain.usecase.DishUseCase;
-import com.pragma.powerup.domain.usecase.ObjectUseCase;
 import com.pragma.powerup.domain.usecase.OrderUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantUseCase;
 import com.pragma.powerup.domain.usecase.validations.DishValidations;
@@ -29,8 +27,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfiguration {
-    private final IObjectRepository objectRepository;
-    private final IObjectEntityMapper objectEntityMapper;
     private final IRestaurantRepository restaurantRepository;
     private final IRestaurantEntityMapper restaurantEntityMapper;
     private final IDishEntityMapper dishEntityMapper;
@@ -41,18 +37,6 @@ public class BeanConfiguration {
     private final IOrderEntityMapper orderEntityMapper;
     private final IEmployeeRestaurantRepository employeeRestaurantRepository;
     private final IEmployeeRestaurantEntityMapper employeeRestaurantEntityMapper;
-
-
-
-    @Bean
-    public IObjectPersistencePort objectPersistencePort(IObjectEntityMapper objectEntityMapper) {
-        return new ObjectJpaAdapter(objectRepository, objectEntityMapper);
-    }
-
-    @Bean
-    public IObjectServicePort objectServicePort(IObjectPersistencePort objectPersistencePort) {
-        return new ObjectUseCase(objectPersistencePort);
-    }
 
 
     @Bean
@@ -91,16 +75,12 @@ public class BeanConfiguration {
     public IDishServicePort dishServicePort(
             IDishPersistencePort dishPersistencePort,
             DishValidations dishValidations,
-            TokenValidations tokenValidations,
-            IRestaurantPersistencePort restaurantPersistencePort,
-            ICategoryPersistencePort categoryPersistencePort) {
+            TokenValidations tokenValidations) {
 
         return new DishUseCase(
                 dishPersistencePort,
                 dishValidations,
-                tokenValidations,
-                restaurantPersistencePort,
-                categoryPersistencePort
+                tokenValidations
         );
     }
 
