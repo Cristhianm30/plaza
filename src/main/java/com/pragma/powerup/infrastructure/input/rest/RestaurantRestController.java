@@ -13,20 +13,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/plaza")
+@RequestMapping("/restaurants")
 @RequiredArgsConstructor
 public class RestaurantRestController {
 
     private final RestaurantHandlerImpl restaurantHandler;
 
 
-    @PostMapping("/restaurant")
+    @PostMapping
     public ResponseEntity<RestaurantResponseDto> createRestaurant (@RequestBody RestaurantRequestDto restaurantRequestDto){
         RestaurantResponseDto createdRestaurant = restaurantHandler.createRestaurant(restaurantRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRestaurant);
     }
 
-    @GetMapping("/restaurants")
+    @GetMapping("/list")
     public ResponseEntity<PaginationResponseDto<RestaurantItemResponseDto>> getRestaurants(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -35,7 +35,7 @@ public class RestaurantRestController {
         return ResponseEntity.ok(restaurantHandler.getPaginatedRestaurants(page, size, sortBy));
     }
 
-    @PostMapping("/employee/{restaurantId}")
+    @PostMapping("/{restaurantId}/employee")
     public ResponseEntity<AssignEmployeeResponseDto> assignEmployeeToRestaurant(
             @PathVariable("restaurantId") Long idRestaurant,
             @RequestBody AssignEmployeeRequestDto assignEmployeeRequestDto,

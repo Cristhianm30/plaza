@@ -136,7 +136,7 @@ public class OrderUseCase implements IOrderServicePort {
     }
 
     @Override
-    public Order deleteOrder(Long orderId, String token) {
+    public Order cancelOrder(Long orderId, String token) {
 
         String cleanedToken = tokenValidations.cleanedToken(token);
 
@@ -147,7 +147,6 @@ public class OrderUseCase implements IOrderServicePort {
         orderValidations.validateOrderClient(clientId,order);
 
         order.setStatus("CANCELADO");
-
 
         return orderPersistencePort.saveOrder(order);
     }

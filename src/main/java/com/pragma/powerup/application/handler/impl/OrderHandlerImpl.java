@@ -77,9 +77,9 @@ public class OrderHandlerImpl implements IOrderHandler {
     }
 
     @Override
-    public OrderResponseDto deleteOrder(Long orderId, String token) {
+    public OrderResponseDto cancelOrder(Long orderId, String token) {
 
-        Order deletedOrder = orderServicePort.deleteOrder(orderId,token);
+        Order deletedOrder = orderServicePort.cancelOrder(orderId,token);
 
         return orderResponseMapper.toResponse(deletedOrder);
     }

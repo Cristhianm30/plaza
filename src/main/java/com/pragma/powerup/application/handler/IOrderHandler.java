@@ -11,6 +11,6 @@ public interface IOrderHandler {
     OrderResponseDto assignEmployeeToOrder (Long orderId, String token );
     OrderResponseDto notifyOrderReady(Long orderId,String token);
     OrderResponseDto deliverOrder(Long orderId,String otp,String token);
-    OrderResponseDto deleteOrder(Long orderId,String token);
+    OrderResponseDto cancelOrder(Long orderId, String token);
 
 }

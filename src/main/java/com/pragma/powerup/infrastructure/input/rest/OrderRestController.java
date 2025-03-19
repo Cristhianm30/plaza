@@ -4,15 +4,10 @@ import com.pragma.powerup.application.dto.request.OrderRequestDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
 import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
-import com.pragma.powerup.domain.api.IOrderServicePort;
-import com.pragma.powerup.domain.model.Pagination;
-import com.pragma.powerup.domain.spi.IJwtTokenProviderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/orders")
@@ -48,7 +43,7 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.assignEmployeeToOrder(orderId,token));
     }
 
-    @PatchMapping("ready/{orderId}")
+    @PatchMapping("/ready/{orderId}")
     public ResponseEntity<OrderResponseDto> notifyOrderReady(
             @PathVariable("orderId") Long orderId,
             @RequestHeader ("Authorization") String token
@@ -56,7 +51,7 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.notifyOrderReady(orderId,token));
     }
 
-    @PatchMapping("deliver/{orderId}")
+    @PatchMapping("/deliver/{orderId}")
     public ResponseEntity<OrderResponseDto> deliverOrder(
             @PathVariable("orderId") Long orderId,
             @RequestParam() String otp,
@@ -65,12 +60,12 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.deliverOrder(orderId,otp,token));
     }
 
-    @DeleteMapping("delete/{orderId}")
-    public ResponseEntity<OrderResponseDto> deleteOrder(
+    @PatchMapping("/cancel/{orderId}")
+    public ResponseEntity<OrderResponseDto> cancelOrder(
             @PathVariable("orderId") Long orderId,
             @RequestHeader ("Authorization") String token
     ){
-        return ResponseEntity.ok(orderHandler.deleteOrder(orderId,token));
+        return ResponseEntity.ok(orderHandler.cancelOrder(orderId,token));
     }
 
 
