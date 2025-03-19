@@ -19,19 +19,11 @@ public class OrderOtpEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private Long orderId;
-
     @Column(nullable = false)
-    private Long clientId;
+    private Long orderId;
 
     @Column(nullable = false)
     private String otp;
 
-    @Column(nullable = false)
-    private String status;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
 
 }

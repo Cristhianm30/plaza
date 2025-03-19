@@ -7,4 +7,5 @@ public interface IOrderServicePort {
     Order createOrder(Order order, String token);
     Pagination<Order> getAllOrdersPaginated(String status, int page, int size, String token);
     Order assignEmployeeToOrder(Long orderId, String token);
+    Order notifyOrderReady(Long orderId, String token);
 }

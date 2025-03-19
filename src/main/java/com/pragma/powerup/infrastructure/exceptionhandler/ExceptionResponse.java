@@ -16,7 +16,11 @@ public enum ExceptionResponse {
     MULTIPLE_RESTAURANT("El pedido no puede contener platos de diferentes Restaurantes"),
     INVALID_EMPLOYEE_ID("El ID del usuario no corresponde con el rol empleado"),
     INVALID_RESTAURANT_OWNER("El propietario no corresponde con el ID del restaurante"),
-    INVALID_RESTAURANT_EMPLOYEE("El empleado no corresponde con el ID del restaurante");
+    INVALID_RESTAURANT_EMPLOYEE("El empleado no corresponde con el ID del restaurante"),
+    OTP_NOT_FOUND("No se encontro el OTP en la mensajeria o en la base de datos"),
+    INVALID_EMPLOYEE_ORDER("El empleado no esta acargo de la orden"),
+    NOT_PREPARATION("La orden no esta en preparacion"),
+    NOT_PENDING("La orden no esta pendiente");
 
     private final String message;
 

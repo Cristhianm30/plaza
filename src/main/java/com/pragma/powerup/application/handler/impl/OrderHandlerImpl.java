@@ -59,4 +59,12 @@ public class OrderHandlerImpl implements IOrderHandler {
 
         return orderResponseMapper.toResponse(assign);
     }
+
+    @Override
+    public OrderResponseDto notifyOrderReady(Long orderId, String token) {
+
+        Order updatedOrder = orderServicePort.notifyOrderReady(orderId,token);
+
+        return orderResponseMapper.toResponse(updatedOrder);
+    }
 }

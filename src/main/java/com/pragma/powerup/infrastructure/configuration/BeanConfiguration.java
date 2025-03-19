@@ -11,7 +11,9 @@ import com.pragma.powerup.domain.usecase.validations.DishValidations;
 import com.pragma.powerup.domain.usecase.validations.OrderValidations;
 import com.pragma.powerup.domain.usecase.validations.RestaurantValidations;
 import com.pragma.powerup.domain.usecase.validations.TokenValidations;
+import com.pragma.powerup.infrastructure.out.feign.IMessagingFeignClient;
 import com.pragma.powerup.infrastructure.out.feign.IUserFeignClient;
+import com.pragma.powerup.infrastructure.out.feign.MessagingFeignAdapter;
 import com.pragma.powerup.infrastructure.out.feign.UserFeignAdapter;
 
 import com.pragma.powerup.infrastructure.out.jpa.adapter.*;
@@ -37,11 +39,18 @@ public class BeanConfiguration {
     private final IOrderEntityMapper orderEntityMapper;
     private final IEmployeeRestaurantRepository employeeRestaurantRepository;
     private final IEmployeeRestaurantEntityMapper employeeRestaurantEntityMapper;
+    private final IOrderOtpRepository orderOtpRepository;
+    private final IOrderOtpEntityMapper orderOtpEntityMapper;
 
 
     @Bean
     public IUserFeignPort userFeignPort(IUserFeignClient userFeignClient) {
         return new UserFeignAdapter(userFeignClient);
+    }
+
+    @Bean
+    public IMessagingFeignPort messagingFeignPort(IMessagingFeignClient messagingFeignClient){
+        return new MessagingFeignAdapter(messagingFeignClient);
     }
 
 
@@ -113,9 +122,12 @@ public class BeanConfiguration {
             TokenValidations tokenValidations,
             OrderValidations orderValidations,
             IUserFeignPort userFeignPort,
-            IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort
+            IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort,
+            IMessagingFeignPort messagingFeignPort,
+            IOrderOtpPersistencePort orderOtpPersistencePort
     ){
-        return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations,userFeignPort,employeeRestaurantPersistencePort);
+        return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations,userFeignPort,employeeRestaurantPersistencePort,messagingFeignPort,
+                orderOtpPersistencePort);
     }
 
     @Bean
@@ -134,6 +146,11 @@ public class BeanConfiguration {
     @Bean
     public IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort(){
         return new EmployeeRestaurantJpaAdapter(employeeRestaurantRepository,employeeRestaurantEntityMapper);
+    }
+
+    @Bean
+    public IOrderOtpPersistencePort orderOtpPersistencePort(){
+        return new OrderOtpJpaAdapter(orderOtpRepository,orderOtpEntityMapper);
     }
 
 

@@ -44,4 +44,22 @@ public class OrderValidations {
             throw new InvalidRestaurantEmployeeException();
         }
     }
+
+    public void validateOrderEmployee (Long employeeId,Order order){
+        if(!order.getChefId().equals(employeeId)){
+            throw  new InvalidOrderEmployeeException();
+        }
+    }
+
+    public void validateInPreparation(Order order){
+        if (!order.getStatus().equals("EN_PREPARACION")){
+            throw  new NotPreparationException();
+        }
+    }
+
+    public void validatePending(Order order){
+        if (!order.getStatus().equals("PENDIENTE")){
+            throw  new NotPendingException();
+        }
+    }
 }

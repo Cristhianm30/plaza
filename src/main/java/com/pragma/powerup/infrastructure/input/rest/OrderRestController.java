@@ -48,5 +48,13 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.assignEmployeeToOrder(orderId,token));
     }
 
+    @PatchMapping("ready/{orderId}")
+    public ResponseEntity<OrderResponseDto> notifyOrderReady(
+            @PathVariable("orderId") Long orderId,
+            @RequestHeader ("Authorization") String token
+    ){
+        return ResponseEntity.ok(orderHandler.notifyOrderReady(orderId,token));
+    }
+
 
 }

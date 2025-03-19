@@ -25,5 +25,13 @@ public class UserFeignAdapter implements IUserFeignPort {
                 : null;
     }
 
+    @Override
+    public String getUserPhone(Long userId) {
+        ResponseEntity<UserResponseDto> response = userFeignClient.getUserById(userId);
+        UserResponseDto user = response.getBody();
+        String phone = (user != null) ? user.getCellPhone() : null;
+        return phone;
+    }
+
 }
 

@@ -27,6 +27,9 @@ jwt:
 user-service:
   url: http://localhost:8080
 
+messaging-service:
+  url: http://localhost:8082
+
 
 appDescription: "Pragma Powerup"
 appVersion: "1.0.0"

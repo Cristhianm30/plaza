@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
 import com.pragma.powerup.domain.exception.*;
+import com.pragma.powerup.infrastructure.exception.OrderOtpNotFoundException;
 import com.pragma.powerup.infrastructure.exception.RelationEmployeeRestaurantException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,6 +126,34 @@ public class ControllerAdvisor {
             InvalidRestaurantEmployeeException invalidRestaurantEmployeeException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_RESTAURANT_EMPLOYEE.getMessage()));
+    }
+
+    @ExceptionHandler(OrderOtpNotFoundException.class)
+    public ResponseEntity<Map<String, String>> orderOtpNotFoundException(
+            OrderOtpNotFoundException orderOtpNotFoundException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.OTP_NOT_FOUND.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidOrderEmployeeException.class)
+    public ResponseEntity<Map<String, String>> InvalidOrderEmployeeException(
+            InvalidOrderEmployeeException InvalidOrderEmployeeException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_EMPLOYEE_ORDER.getMessage()));
+    }
+
+    @ExceptionHandler(NotPreparationException.class)
+    public ResponseEntity<Map<String, String>> NotPreparationException(
+            NotPreparationException NotPreparationException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_PREPARATION.getMessage()));
+    }
+
+    @ExceptionHandler(NotPendingException.class)
+    public ResponseEntity<Map<String, String>> NotPendingException(
+            NotPendingException NotPendingException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_PENDING.getMessage()));
     }
     
 }

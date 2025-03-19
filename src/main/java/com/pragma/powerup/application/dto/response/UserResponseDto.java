@@ -14,7 +14,7 @@ public class UserResponseDto {
     private String name;
     private String lastName;
     private String documentNumber;
-    private String phone;
+    private String CellPhone;
     private LocalDate birthDate;
     private String email;
     private RoleDto role;
