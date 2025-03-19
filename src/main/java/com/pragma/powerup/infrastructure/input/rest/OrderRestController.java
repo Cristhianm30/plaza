@@ -65,5 +65,13 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.deliverOrder(orderId,otp,token));
     }
 
+    @DeleteMapping("delete/{orderId}")
+    public ResponseEntity<OrderResponseDto> deleteOrder(
+            @PathVariable("orderId") Long orderId,
+            @RequestHeader ("Authorization") String token
+    ){
+        return ResponseEntity.ok(orderHandler.deleteOrder(orderId,token));
+    }
+
 
 }

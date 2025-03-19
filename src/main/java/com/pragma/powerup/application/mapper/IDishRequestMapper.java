@@ -13,6 +13,6 @@ public interface IDishRequestMapper {
 
     Dish requestToModel(DishRequestDto dishRequestDto);
 
-    Dish updaterequestToModel (DishUpdateRequestDto dishUpdateRequestDto);
+    Dish updateRequestToModel(DishUpdateRequestDto dishUpdateRequestDto);
 
 }

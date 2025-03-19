@@ -169,5 +169,19 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_READY.getMessage()));
     }
+
+    @ExceptionHandler(InvalidOrderClientException.class)
+    public ResponseEntity<Map<String, String>> InvalidOrderClientException(
+            InvalidOrderClientException InvalidOrderClientException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_CLIENT_ORDER.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidCancelingException.class)
+    public ResponseEntity<Map<String, String>> InvalidCancelingException(
+            InvalidCancelingException InvalidCancelingException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_CANCELING.getMessage()));
+    }
     
 }

@@ -22,7 +22,9 @@ public enum ExceptionResponse {
     NOT_PREPARATION("La orden no esta en preparacion"),
     NOT_PENDING("La orden no esta pendiente"),
     WRONG_OTP("El codigo de verificacion es incorrecto"),
-    NOT_READY("La orden no esta lista");
+    NOT_READY("La orden no esta lista"),
+    INVALID_CLIENT_ORDER("El cliente logueado no es quien realizo la order"),
+    INVALID_CANCELING("Lo sentimos, tu pedido ya está en preparación y no puede cancelarse");
 
     private final String message;
 

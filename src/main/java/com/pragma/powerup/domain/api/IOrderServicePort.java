@@ -9,4 +9,5 @@ public interface IOrderServicePort {
     Order assignEmployeeToOrder(Long orderId, String token);
     Order notifyOrderReady(Long orderId, String token);
     Order deliverOrder(Long orderId, String otp, String token);
+    Order deleteOrder(Long orderId,String token);
 }

@@ -53,7 +53,7 @@ public class DishHandlerImpl implements IDishHandler {
     @Override
     public DishResponseDto updateDish(Long id, DishUpdateRequestDto dishUpdateRequest, String token) {
 
-        Dish update = dishRequestMapper.updaterequestToModel(dishUpdateRequest);
+        Dish update = dishRequestMapper.updateRequestToModel(dishUpdateRequest);
         Dish updated = dishServicePort.updateDish(id,update,token);
 
         return dishResponseMapper.modelToResponse(updated);

@@ -76,4 +76,17 @@ public class OrderValidations {
         }
     }
 
+    public void validateOrderClient (Long clientId,Order order){
+        if(!order.getClientId().equals(clientId)){
+            throw new InvalidOrderClientException();
+        }
+    }
+
+    public void validateToCancel(Order order){
+        if (!order.getStatus().equals("PENDIENTE")){
+            throw  new InvalidCancelingException();
+        }
+    }
+
+
 }
