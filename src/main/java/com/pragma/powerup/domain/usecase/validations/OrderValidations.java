@@ -3,6 +3,7 @@ package com.pragma.powerup.domain.usecase.validations;
 import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.domain.model.Dish;
 import com.pragma.powerup.domain.model.Order;
+import com.pragma.powerup.domain.model.OrderOtp;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IOrderPersistencePort;
 
@@ -62,4 +63,17 @@ public class OrderValidations {
             throw  new NotPendingException();
         }
     }
+
+    public void validateReady (Order order){
+        if (!order.getStatus().equals("LISTO")){
+            throw  new NotReadyException();
+        }
+    }
+
+    public void validateOtp(OrderOtp orderOtp, String otp){
+        if (!orderOtp.getOtp().equals(otp)){
+            throw  new WrongOtpException();
+        }
+    }
+
 }

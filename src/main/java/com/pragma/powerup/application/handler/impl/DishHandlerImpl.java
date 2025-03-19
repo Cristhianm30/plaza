@@ -40,7 +40,7 @@ public class DishHandlerImpl implements IDishHandler {
         Category category = categoryPersistencePort.findById(dishRequest.getCategoryId());
 
         Dish dish = dishRequestMapper.requestToModel(dishRequest);
-
+        // aqui podría sacar del request las Id y enviarlas como Long en el service port y evitar las persistencias en este handler
         dish.setCategory(category);
         dish.setRestaurant(restaurant);
 

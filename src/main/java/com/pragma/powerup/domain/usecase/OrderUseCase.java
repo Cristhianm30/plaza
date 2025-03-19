@@ -112,8 +112,26 @@ public class OrderUseCase implements IOrderServicePort {
         orderOtpPersistencePort.saveOrderOtp(orderOtp);
 
         order.setStatus("LISTO");
-        orderPersistencePort.saveOrder(order);
 
-        return order;
+        return orderPersistencePort.saveOrder(order);
+    }
+
+    @Override
+    public Order deliverOrder(Long orderId, String otp, String token) {
+
+        String cleanedToken = tokenValidations.cleanedToken(token);
+
+        Long employeeId = tokenValidations.getUserIdFromToken(cleanedToken);
+
+        Order order = orderPersistencePort.findById(orderId);
+        orderValidations.validateReady(order);
+        orderValidations.validateOrderEmployee(employeeId,order);
+
+        OrderOtp orderOtp = orderOtpPersistencePort.findByOrderId(orderId);
+        orderValidations.validateOtp(orderOtp,otp);
+
+        order.setStatus("ENTREGADO");
+
+        return orderPersistencePort.saveOrder(order);
     }
 }

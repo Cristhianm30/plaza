@@ -155,5 +155,19 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_PENDING.getMessage()));
     }
+
+    @ExceptionHandler(WrongOtpException.class)
+    public ResponseEntity<Map<String, String>> WrongOtpException(
+            WrongOtpException WrongOtpException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.WRONG_OTP.getMessage()));
+    }
+
+    @ExceptionHandler(NotReadyException.class)
+    public ResponseEntity<Map<String, String>> NotReadyException(
+            NotReadyException NotReadyException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_READY.getMessage()));
+    }
     
 }

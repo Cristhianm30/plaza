@@ -56,5 +56,14 @@ public class OrderRestController {
         return ResponseEntity.ok(orderHandler.notifyOrderReady(orderId,token));
     }
 
+    @PatchMapping("deliver/{orderId}")
+    public ResponseEntity<OrderResponseDto> deliverOrder(
+            @PathVariable("orderId") Long orderId,
+            @RequestParam() String otp,
+            @RequestHeader ("Authorization") String token
+    ){
+        return ResponseEntity.ok(orderHandler.deliverOrder(orderId,otp,token));
+    }
+
 
 }

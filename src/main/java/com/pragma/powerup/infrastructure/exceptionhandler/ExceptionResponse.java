@@ -20,7 +20,9 @@ public enum ExceptionResponse {
     OTP_NOT_FOUND("No se encontro el OTP en la mensajeria o en la base de datos"),
     INVALID_EMPLOYEE_ORDER("El empleado no esta acargo de la orden"),
     NOT_PREPARATION("La orden no esta en preparacion"),
-    NOT_PENDING("La orden no esta pendiente");
+    NOT_PENDING("La orden no esta pendiente"),
+    WRONG_OTP("El codigo de verificacion es incorrecto"),
+    NOT_READY("La orden no esta lista");
 
     private final String message;
 
