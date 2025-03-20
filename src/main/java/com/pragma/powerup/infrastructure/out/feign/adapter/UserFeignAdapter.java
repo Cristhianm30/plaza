@@ -1,9 +1,10 @@
-package com.pragma.powerup.infrastructure.out.feign;
+package com.pragma.powerup.infrastructure.out.feign.adapter;
 
 
 import com.pragma.powerup.application.dto.response.UserResponseDto;
 import com.pragma.powerup.domain.spi.IUserFeignPort;
 
+import com.pragma.powerup.infrastructure.out.feign.client.IUserFeignClient;
 import org.springframework.http.ResponseEntity;
 
 
@@ -29,9 +30,20 @@ public class UserFeignAdapter implements IUserFeignPort {
     public String getUserPhone(Long userId) {
         ResponseEntity<UserResponseDto> response = userFeignClient.getUserById(userId);
         UserResponseDto user = response.getBody();
-        String phone = (user != null) ? user.getCellPhone() : null;
-        return phone;
+        return (user != null)
+                ? user.getCellPhone()
+                : null;
     }
+
+    @Override
+    public String getUserEmail(Long userId) {
+        ResponseEntity<UserResponseDto> response = userFeignClient.getUserById(userId);
+        UserResponseDto user = response.getBody();
+        return (user != null && user.getRole() != null)
+                ? user.getEmail()
+                : null;
+    }
+
 
 }
 

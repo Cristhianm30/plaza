@@ -1,4 +1,4 @@
-package com.pragma.powerup.infrastructure.out.feign;
+package com.pragma.powerup.infrastructure.out.feign.client;
 
 
 import com.pragma.powerup.application.dto.response.UserResponseDto;

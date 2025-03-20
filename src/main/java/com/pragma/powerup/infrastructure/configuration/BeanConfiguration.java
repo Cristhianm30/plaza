@@ -11,10 +11,10 @@ import com.pragma.powerup.domain.usecase.validations.DishValidations;
 import com.pragma.powerup.domain.usecase.validations.OrderValidations;
 import com.pragma.powerup.domain.usecase.validations.RestaurantValidations;
 import com.pragma.powerup.domain.usecase.validations.TokenValidations;
-import com.pragma.powerup.infrastructure.out.feign.IMessagingFeignClient;
-import com.pragma.powerup.infrastructure.out.feign.IUserFeignClient;
-import com.pragma.powerup.infrastructure.out.feign.MessagingFeignAdapter;
-import com.pragma.powerup.infrastructure.out.feign.UserFeignAdapter;
+import com.pragma.powerup.infrastructure.out.feign.client.IMessagingFeignClient;
+import com.pragma.powerup.infrastructure.out.feign.client.IUserFeignClient;
+import com.pragma.powerup.infrastructure.out.feign.adapter.MessagingFeignAdapter;
+import com.pragma.powerup.infrastructure.out.feign.adapter.UserFeignAdapter;
 
 import com.pragma.powerup.infrastructure.out.jpa.adapter.*;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.*;
@@ -138,9 +138,10 @@ public class BeanConfiguration {
     @Bean
     public OrderValidations orderValidations(
             IOrderPersistencePort orderPersistence,
-            IDishPersistencePort dishPersistence
+            IDishPersistencePort dishPersistence,
+            ITraceabilityFeignPort traceabilityFeignPort
     ) {
-        return new OrderValidations(orderPersistence, dishPersistence);
+        return new OrderValidations(orderPersistence, dishPersistence, traceabilityFeignPort);
     }
 
     @Bean

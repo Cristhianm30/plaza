@@ -19,4 +19,5 @@ public class TraceabilityDto {
     private String newStatus;
     private Long employeeId;
     private String employeeEmail;
+
 }

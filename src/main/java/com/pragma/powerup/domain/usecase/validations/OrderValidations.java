@@ -4,19 +4,24 @@ import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.domain.model.Dish;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.OrderOtp;
+import com.pragma.powerup.domain.model.Traceability;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IOrderPersistencePort;
+import com.pragma.powerup.domain.spi.ITraceabilityFeignPort;
 
 public class OrderValidations {
 
     private final IOrderPersistencePort orderPersistencePort;
+    private final IDishPersistencePort dishPersistencePort;
+    private final ITraceabilityFeignPort traceabilityFeignPort;
 
-    public OrderValidations(IOrderPersistencePort orderPersistencePort, IDishPersistencePort dishPersistencePort) {
+    public OrderValidations(IOrderPersistencePort orderPersistencePort, IDishPersistencePort dishPersistencePort, ITraceabilityFeignPort traceabilityFeignPort) {
         this.orderPersistencePort = orderPersistencePort;
         this.dishPersistencePort = dishPersistencePort;
+        this.traceabilityFeignPort = traceabilityFeignPort;
     }
 
-    private final IDishPersistencePort dishPersistencePort;
+
 
     public void validateActiveOrders(Long clientId) {
         if (orderPersistencePort.existsActiveOrder(clientId)) {
@@ -86,6 +91,21 @@ public class OrderValidations {
         if (!order.getStatus().equals("PENDIENTE")){
             throw  new InvalidCancelingException();
         }
+    }
+
+    public void createTraceability(Order order,String userEmail){
+        Traceability traceability = new Traceability();
+        traceability.setOrderId(order.getId());
+        traceability.setClientId(order.getClientId());
+        traceability.setClientEmail(userEmail);
+        traceability.setDate(order.getDate());
+        traceability.setLastStatus(null);
+        traceability.setNewStatus(order.getStatus());
+        traceability.setEmployeeId(null);
+        traceability.setEmployeeEmail(null);
+
+        traceabilityFeignPort.sendTraceability(traceability);
+
     }
 
 

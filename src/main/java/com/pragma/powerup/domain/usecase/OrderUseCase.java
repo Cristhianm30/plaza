@@ -51,9 +51,11 @@ public class OrderUseCase implements IOrderServicePort {
 
         order.setStatus("PENDIENTE");
         order.setDate(LocalDateTime.now());
+        String userEmail = userFeignPort.getUserEmail(clientId);
 
-        // Guardar pedido
-        return orderPersistencePort.saveOrder(order);
+        Order savedOrder = orderPersistencePort.saveOrder(order);
+        orderValidations.createTraceability(savedOrder,userEmail);
+        return savedOrder;
     }
 
     @Override

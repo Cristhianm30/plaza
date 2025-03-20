@@ -1,23 +1,22 @@
-package com.pragma.powerup.infrastructure.out.feign;
+package com.pragma.powerup.infrastructure.out.feign.adapter;
 
 import com.pragma.powerup.application.dto.request.OtpRequestDto;
 import com.pragma.powerup.application.dto.response.OtpResponseDto;
 import com.pragma.powerup.domain.model.OrderOtp;
 import com.pragma.powerup.domain.spi.IMessagingFeignPort;
 import com.pragma.powerup.infrastructure.exception.OrderOtpNotFoundException;
+import com.pragma.powerup.infrastructure.out.feign.client.IMessagingFeignClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 
 @Component
+@RequiredArgsConstructor
 public class MessagingFeignAdapter implements IMessagingFeignPort {
 
     private final IMessagingFeignClient messagingFeignClient;
 
-    public MessagingFeignAdapter(IMessagingFeignClient messagingFeignClient) {
-        this.messagingFeignClient = messagingFeignClient;
-    }
 
     @Override
     public OrderOtp sendOtp(String phone, Long orderId) {
