@@ -183,5 +183,12 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_CANCELING.getMessage()));
     }
+
+    @ExceptionHandler(InvalidOrderStatusException.class)
+    public ResponseEntity<Map<String, String>> InvalidOrderStatusException(
+            InvalidOrderStatusException InvalidOrderStatusException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_ORDER_STATUS.getMessage()));
+    }
     
 }

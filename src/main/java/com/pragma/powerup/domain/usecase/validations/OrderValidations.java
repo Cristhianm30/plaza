@@ -9,6 +9,8 @@ import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IOrderPersistencePort;
 import com.pragma.powerup.domain.spi.ITraceabilityFeignPort;
 
+import java.time.LocalDateTime;
+
 public class OrderValidations {
 
     private final IOrderPersistencePort orderPersistencePort;
@@ -93,12 +95,13 @@ public class OrderValidations {
         }
     }
 
-    public void createTraceability(Order order,String userEmail){
+    public void createOrCancelTraceability(Order order, String userEmail){
         Traceability traceability = new Traceability();
         traceability.setOrderId(order.getId());
         traceability.setClientId(order.getClientId());
         traceability.setClientEmail(userEmail);
-        traceability.setDate(order.getDate());
+        LocalDateTime now = LocalDateTime.now();
+        traceability.setDate(now);
         traceability.setLastStatus(null);
         traceability.setNewStatus(order.getStatus());
         traceability.setEmployeeId(null);
@@ -106,6 +109,46 @@ public class OrderValidations {
 
         traceabilityFeignPort.sendTraceability(traceability);
 
+    }
+
+    public void updateTraceability (Order order, String clientEmail,String employeeEmail){
+        Traceability traceability = new Traceability();
+        traceability.setOrderId(order.getId());
+        traceability.setClientId(order.getClientId());
+        traceability.setClientEmail(clientEmail);
+        LocalDateTime now = LocalDateTime.now();
+        traceability.setDate(now);
+        traceability.setLastStatus(lastStatus(order));
+        traceability.setNewStatus(order.getStatus());
+        traceability.setEmployeeId(order.getChefId());
+        traceability.setEmployeeEmail(employeeEmail);
+
+        traceabilityFeignPort.sendTraceability(traceability);
+    }
+
+
+
+    private String lastStatus (Order order){
+        String lastStatus;
+        if (order.getStatus() != null) {
+            switch (order.getStatus()) {
+                case "EN_PREPARACION":
+                case "CANCELADO":
+                    lastStatus = "PENDIENTE";
+                    break;
+                case "LISTO":
+                    lastStatus = "EN_PREPARACION";
+                    break;
+                case "ENTREGADO":
+                    lastStatus = "LISTO";
+                    break;
+                default:
+                    throw new InvalidOrderStatusException();
+            }
+            return lastStatus;
+        } else {
+           throw new InvalidOrderStatusException();
+        }
     }
 
 

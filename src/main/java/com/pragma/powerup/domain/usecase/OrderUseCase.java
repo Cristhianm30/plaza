@@ -54,7 +54,7 @@ public class OrderUseCase implements IOrderServicePort {
         String userEmail = userFeignPort.getUserEmail(clientId);
 
         Order savedOrder = orderPersistencePort.saveOrder(order);
-        orderValidations.createTraceability(savedOrder,userEmail);
+        orderValidations.createOrCancelTraceability(savedOrder,userEmail);
         return savedOrder;
     }
 
@@ -88,12 +88,17 @@ public class OrderUseCase implements IOrderServicePort {
         Long employeeRestaurantId = employee.getRestaurantId();
         orderValidations.validateRestaurantEmployee(restaurantId,employeeRestaurantId);
 
-        
-
         order.setStatus("EN_PREPARACION");
         order.setChefId(employeeId);
 
-        return orderPersistencePort.saveOrder(order);
+
+        String clientEmail = userFeignPort.getUserEmail(order.getClientId());
+        String employeeEmail = userFeignPort.getUserEmail(order.getChefId());
+
+
+        Order savedOrder = orderPersistencePort.saveOrder(order);
+        orderValidations.updateTraceability(savedOrder,clientEmail,employeeEmail);
+        return savedOrder;
 
     }
 
@@ -115,7 +120,13 @@ public class OrderUseCase implements IOrderServicePort {
 
         order.setStatus("LISTO");
 
-        return orderPersistencePort.saveOrder(order);
+        String clientEmail = userFeignPort.getUserEmail(order.getClientId());
+        String employeeEmail = userFeignPort.getUserEmail(order.getChefId());
+
+        Order savedOrder = orderPersistencePort.saveOrder(order);
+        orderValidations.updateTraceability(savedOrder,clientEmail,employeeEmail);
+
+        return savedOrder;
     }
 
     @Override
@@ -134,7 +145,13 @@ public class OrderUseCase implements IOrderServicePort {
 
         order.setStatus("ENTREGADO");
 
-        return orderPersistencePort.saveOrder(order);
+        String clientEmail = userFeignPort.getUserEmail(order.getClientId());
+        String employeeEmail = userFeignPort.getUserEmail(order.getChefId());
+
+        Order savedOrder = orderPersistencePort.saveOrder(order);
+        orderValidations.updateTraceability(savedOrder,clientEmail,employeeEmail);
+
+        return savedOrder;
     }
 
     @Override
@@ -150,6 +167,10 @@ public class OrderUseCase implements IOrderServicePort {
 
         order.setStatus("CANCELADO");
 
-        return orderPersistencePort.saveOrder(order);
+        String userEmail = userFeignPort.getUserEmail(clientId);
+
+        Order savedOrder = orderPersistencePort.saveOrder(order);
+        orderValidations.createOrCancelTraceability(savedOrder,userEmail);
+        return savedOrder;
     }
 }
