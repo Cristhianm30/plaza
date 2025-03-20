@@ -2,6 +2,9 @@ package com.pragma.powerup.domain.api;
 
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.Pagination;
+import com.pragma.powerup.domain.model.Traceability;
+
+import java.util.List;
 
 public interface IOrderServicePort {
     Order createOrder(Order order, String token);
@@ -10,4 +13,6 @@ public interface IOrderServicePort {
     Order notifyOrderReady(Long orderId, String token);
     Order deliverOrder(Long orderId, String otp, String token);
     Order cancelOrder(Long orderId, String token);
+    List<Traceability> getTraceabilityByClient(String token);
+
 }

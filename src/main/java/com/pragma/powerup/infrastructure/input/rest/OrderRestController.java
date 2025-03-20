@@ -3,11 +3,14 @@ package com.pragma.powerup.infrastructure.input.rest;
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
 import com.pragma.powerup.application.dto.response.PaginationResponseDto;
+import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -67,6 +70,15 @@ public class OrderRestController {
     ){
         return ResponseEntity.ok(orderHandler.cancelOrder(orderId,token));
     }
+
+    @GetMapping("/logs/client")
+    public ResponseEntity<List<TraceabilityDto>> getTraceabilityByClient(
+            @RequestHeader("Authorization") String token
+    ){
+        return ResponseEntity.ok(orderHandler.getLogsByClient(token));
+    }
+
+
 
 
 }

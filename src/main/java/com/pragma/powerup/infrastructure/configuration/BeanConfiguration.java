@@ -124,10 +124,11 @@ public class BeanConfiguration {
             IUserFeignPort userFeignPort,
             IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort,
             IMessagingFeignPort messagingFeignPort,
-            IOrderOtpPersistencePort orderOtpPersistencePort
+            IOrderOtpPersistencePort orderOtpPersistencePort,
+            ITraceabilityFeignPort traceabilityFeignPort
     ){
         return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations,userFeignPort,employeeRestaurantPersistencePort,messagingFeignPort,
-                orderOtpPersistencePort);
+                orderOtpPersistencePort,traceabilityFeignPort);
     }
 
     @Bean

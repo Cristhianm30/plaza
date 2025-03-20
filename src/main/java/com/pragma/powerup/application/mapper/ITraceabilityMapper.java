@@ -1,4 +1,4 @@
-package com.pragma.powerup.infrastructure.out.feign.mapper;
+package com.pragma.powerup.application.mapper;
 
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import com.pragma.powerup.domain.model.Traceability;

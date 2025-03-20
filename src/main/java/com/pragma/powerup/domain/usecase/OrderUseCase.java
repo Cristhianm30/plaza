@@ -1,15 +1,13 @@
 package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IOrderServicePort;
-import com.pragma.powerup.domain.model.EmployeeRestaurant;
-import com.pragma.powerup.domain.model.Order;
-import com.pragma.powerup.domain.model.OrderOtp;
-import com.pragma.powerup.domain.model.Pagination;
+import com.pragma.powerup.domain.model.*;
 import com.pragma.powerup.domain.spi.*;
 import com.pragma.powerup.domain.usecase.validations.OrderValidations;
 import com.pragma.powerup.domain.usecase.validations.TokenValidations;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class OrderUseCase implements IOrderServicePort {
@@ -21,6 +19,7 @@ public class OrderUseCase implements IOrderServicePort {
     private final IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort;
     private final IMessagingFeignPort messagingFeignPort;
     private final IOrderOtpPersistencePort orderOtpPersistencePort;
+    private final ITraceabilityFeignPort traceabilityFeignPort;
 
     public OrderUseCase(IOrderPersistencePort orderPersistencePort,
                         TokenValidations tokenValidations,
@@ -28,7 +27,7 @@ public class OrderUseCase implements IOrderServicePort {
                         IUserFeignPort userFeignPort,
                         IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort,
                         IMessagingFeignPort messagingFeignPort,
-                        IOrderOtpPersistencePort orderOtpPersistencePort) {
+                        IOrderOtpPersistencePort orderOtpPersistencePort, ITraceabilityFeignPort traceabilityFeignPort) {
 
         this.orderPersistencePort = orderPersistencePort;
         this.tokenValidations = tokenValidations;
@@ -37,6 +36,7 @@ public class OrderUseCase implements IOrderServicePort {
         this.employeeRestaurantPersistencePort = employeeRestaurantPersistencePort;
         this.messagingFeignPort = messagingFeignPort;
         this.orderOtpPersistencePort = orderOtpPersistencePort;
+        this.traceabilityFeignPort = traceabilityFeignPort;
     }
 
     @Override
@@ -172,5 +172,15 @@ public class OrderUseCase implements IOrderServicePort {
         Order savedOrder = orderPersistencePort.saveOrder(order);
         orderValidations.createOrCancelTraceability(savedOrder,userEmail);
         return savedOrder;
+    }
+
+    @Override
+    public List<Traceability> getTraceabilityByClient(String token) {
+
+        String cleanedToken = tokenValidations.cleanedToken(token);
+
+        Long clientId = tokenValidations.getUserIdFromToken(cleanedToken);
+
+        return traceabilityFeignPort.getTraceabilityByClient(clientId);
     }
 }

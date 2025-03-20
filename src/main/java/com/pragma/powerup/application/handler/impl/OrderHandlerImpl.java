@@ -3,17 +3,22 @@ package com.pragma.powerup.application.handler.impl;
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
 import com.pragma.powerup.application.dto.response.PaginationResponseDto;
+import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
 import com.pragma.powerup.application.mapper.IOrderRequestMapper;
 import com.pragma.powerup.application.mapper.IOrderResponseMapper;
+import com.pragma.powerup.application.mapper.ITraceabilityMapper;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.model.Order;
 import com.pragma.powerup.domain.model.Pagination;
+import com.pragma.powerup.domain.model.Traceability;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
+import com.pragma.powerup.domain.spi.ITraceabilityFeignPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +30,7 @@ public class OrderHandlerImpl implements IOrderHandler {
     private final IOrderResponseMapper orderResponseMapper;
     private final IRestaurantPersistencePort restaurantPersistencePort;
     private final IDishPersistencePort dishPersistencePort;
+    private final ITraceabilityMapper traceabilityMapper;
 
     @Override
     public OrderResponseDto createOrder(OrderRequestDto orderRequest, String token) {
@@ -83,4 +89,16 @@ public class OrderHandlerImpl implements IOrderHandler {
 
         return orderResponseMapper.toResponse(deletedOrder);
     }
+
+    @Override
+    public List<TraceabilityDto> getLogsByClient(String token) {
+
+        List<Traceability> traceList = orderServicePort.getTraceabilityByClient(token);
+
+        return traceList.stream()
+                .map(traceabilityMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+
 }
