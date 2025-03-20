@@ -102,7 +102,7 @@ public class OrderValidations {
         traceability.setClientEmail(userEmail);
         LocalDateTime now = LocalDateTime.now();
         traceability.setDate(now);
-        traceability.setLastStatus(null);
+        traceability.setLastStatus(lastStatus(order));
         traceability.setNewStatus(order.getStatus());
         traceability.setEmployeeId(null);
         traceability.setEmployeeEmail(null);
@@ -132,6 +132,9 @@ public class OrderValidations {
         String lastStatus;
         if (order.getStatus() != null) {
             switch (order.getStatus()) {
+                case "PENDIENTE":
+                    lastStatus = null;
+                    break;
                 case "EN_PREPARACION":
                 case "CANCELADO":
                     lastStatus = "PENDIENTE";
