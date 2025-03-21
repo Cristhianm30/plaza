@@ -1,9 +1,7 @@
 package com.pragma.powerup.domain.api;
 
-import com.pragma.powerup.domain.model.Order;
-import com.pragma.powerup.domain.model.OrderEfficiency;
-import com.pragma.powerup.domain.model.Pagination;
-import com.pragma.powerup.domain.model.Traceability;
+
+import com.pragma.powerup.domain.model.*;
 
 import java.util.List;
 
@@ -16,5 +14,6 @@ public interface IOrderServicePort {
     Order cancelOrder(Long orderId, String token);
     List<Traceability> getTraceabilityByClient(String token);
     List<OrderEfficiency> getOrdersEfficiency(String token);
+    List<EmployeeRanking> getEmployeeRanking(String token);
 
 }

@@ -1,10 +1,7 @@
 package com.pragma.powerup.application.handler;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
-import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
-import com.pragma.powerup.application.dto.response.OrderResponseDto;
-import com.pragma.powerup.application.dto.response.PaginationResponseDto;
-import com.pragma.powerup.application.dto.response.TraceabilityDto;
+import com.pragma.powerup.application.dto.response.*;
 
 
 import java.util.List;
@@ -19,5 +16,6 @@ public interface IOrderHandler {
     OrderResponseDto cancelOrder(Long orderId, String token);
     List<TraceabilityDto> getLogsByClient(String token);
     List<OrderEfficiencyDto> getOrdersEfficiency(String token);
+    List<EmployeeRankingDto> getEmployeeRanking(String token);
 
 }

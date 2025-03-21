@@ -1,10 +1,7 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
-import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
-import com.pragma.powerup.application.dto.response.OrderResponseDto;
-import com.pragma.powerup.application.dto.response.PaginationResponseDto;
-import com.pragma.powerup.application.dto.response.TraceabilityDto;
+import com.pragma.powerup.application.dto.response.*;
 import com.pragma.powerup.application.handler.IOrderHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -85,6 +82,14 @@ public class OrderRestController {
     ) {
         List<OrderEfficiencyDto> efficiencyList = orderHandler.getOrdersEfficiency(token);
         return ResponseEntity.ok(efficiencyList);
+    }
+
+    @GetMapping("/ranking")
+    public ResponseEntity<List<EmployeeRankingDto>> getEmployeeRanking(
+            @RequestHeader("Authorization") String token
+    ){
+        List<EmployeeRankingDto> rankingList = orderHandler.getEmployeeRanking(token);
+        return ResponseEntity.ok(rankingList);
     }
 
 

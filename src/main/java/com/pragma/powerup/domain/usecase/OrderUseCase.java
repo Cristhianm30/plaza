@@ -209,4 +209,30 @@ public class OrderUseCase implements IOrderServicePort {
 
         return traceabilityFeignPort.getOrderEfficiency(orderIds);
     }
+
+    @Override
+    public List<EmployeeRanking> getEmployeeRanking(String token) {
+
+        String cleanedToken = tokenValidations.cleanedToken(token);
+
+        Long ownerId = tokenValidations.getUserIdFromToken(cleanedToken);
+
+        Restaurant ownerRestaurant = restaurantPersistencePort.findRestaurantByOwnerId(ownerId);
+
+        Long restaurantId = ownerRestaurant.getId();
+
+        List<Order> orders = orderPersistencePort.findOrdersByRestaurantId(restaurantId);
+
+        if (orders.isEmpty()) {
+            throw new OrdersNotFoundException();
+        }
+
+        List<Long> orderIds = orders.stream()
+                .map(Order::getId)
+                .collect(Collectors.toList());
+
+        return traceabilityFeignPort.getEmployeeRanking(orderIds);
+    }
+
+
 }

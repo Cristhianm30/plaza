@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.out.feign.client;
 
+import com.pragma.powerup.application.dto.response.EmployeeRankingDto;
 import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,5 +23,8 @@ public interface ITraceabilityFeignClient {
 
     @PostMapping("/traceability/efficiency/orders")
     ResponseEntity<List<OrderEfficiencyDto>> getOrderEfficiency (@RequestBody List<Long> orderId);
+
+    @PostMapping("/traceability/ranking/employees")
+    ResponseEntity<List<EmployeeRankingDto>> getEmployeeRanking (@RequestBody List<Long> orderId);
 
 }

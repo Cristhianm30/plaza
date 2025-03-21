@@ -1,20 +1,11 @@
 package com.pragma.powerup.application.handler.impl;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
-import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
-import com.pragma.powerup.application.dto.response.OrderResponseDto;
-import com.pragma.powerup.application.dto.response.PaginationResponseDto;
-import com.pragma.powerup.application.dto.response.TraceabilityDto;
+import com.pragma.powerup.application.dto.response.*;
 import com.pragma.powerup.application.handler.IOrderHandler;
-import com.pragma.powerup.application.mapper.IEfficiencyMapper;
-import com.pragma.powerup.application.mapper.IOrderRequestMapper;
-import com.pragma.powerup.application.mapper.IOrderResponseMapper;
-import com.pragma.powerup.application.mapper.ITraceabilityMapper;
+import com.pragma.powerup.application.mapper.*;
 import com.pragma.powerup.domain.api.IOrderServicePort;
-import com.pragma.powerup.domain.model.Order;
-import com.pragma.powerup.domain.model.OrderEfficiency;
-import com.pragma.powerup.domain.model.Pagination;
-import com.pragma.powerup.domain.model.Traceability;
+import com.pragma.powerup.domain.model.*;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +25,7 @@ public class OrderHandlerImpl implements IOrderHandler {
     private final IDishPersistencePort dishPersistencePort;
     private final ITraceabilityMapper traceabilityMapper;
     private final IEfficiencyMapper efficiencyMapper;
+    private final IRankingMapper rankingMapper;
 
     @Override
     public OrderResponseDto createOrder(OrderRequestDto orderRequest, String token) {
@@ -110,6 +102,15 @@ public class OrderHandlerImpl implements IOrderHandler {
 
         return efficiencies.stream()
                 .map(efficiencyMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmployeeRankingDto> getEmployeeRanking(String token) {
+
+        List<EmployeeRanking> rankings = orderServicePort.getEmployeeRanking(token);
+        return rankings.stream()
+                .map(rankingMapper::toDto)
                 .collect(Collectors.toList());
     }
 

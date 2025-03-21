@@ -1,8 +1,11 @@
 package com.pragma.powerup.infrastructure.out.feign.adapter;
 
+import com.pragma.powerup.application.dto.response.EmployeeRankingDto;
 import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import com.pragma.powerup.application.mapper.IEfficiencyMapper;
+import com.pragma.powerup.application.mapper.IRankingMapper;
+import com.pragma.powerup.domain.model.EmployeeRanking;
 import com.pragma.powerup.domain.model.OrderEfficiency;
 import com.pragma.powerup.domain.model.Traceability;
 import com.pragma.powerup.domain.spi.ITraceabilityFeignPort;
@@ -22,6 +25,7 @@ public class TraceabilityFeignAdapter implements ITraceabilityFeignPort {
     private final ITraceabilityFeignClient traceabilityFeignClient;
     private final ITraceabilityMapper traceabilityMapper;
     private final IEfficiencyMapper efficiencyMapper;
+    private final IRankingMapper rankingMapper;
 
 
     @Override
@@ -52,4 +56,17 @@ public class TraceabilityFeignAdapter implements ITraceabilityFeignPort {
                 .map(efficiencyMapper::toModel)
                 .collect(Collectors.toList()) : null;
     }
+
+    @Override
+    public List<EmployeeRanking> getEmployeeRanking(List<Long> orderId) {
+
+        ResponseEntity<List<EmployeeRankingDto>> response = traceabilityFeignClient.getEmployeeRanking(orderId);
+        List<EmployeeRankingDto> dtoList = response.getBody();
+
+        return dtoList != null ? dtoList.stream()
+                .map(rankingMapper::toModel)
+                .collect(Collectors.toList()) : null;
+    }
+
+
 }
