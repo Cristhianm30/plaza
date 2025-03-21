@@ -9,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface ITraceabilityMapper {
+
     Traceability toModel(TraceabilityDto traceabilityDto);
     TraceabilityDto toDto(Traceability traceability);
 }

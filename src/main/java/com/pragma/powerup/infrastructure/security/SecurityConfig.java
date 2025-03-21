@@ -31,7 +31,7 @@ public class SecurityConfig {
 
                         ).permitAll()
                         .antMatchers(HttpMethod.POST, "/restaurants").hasRole("ADMINISTRADOR")
-                        .antMatchers(HttpMethod.POST, "/dishes","/dishes/update/{id}","dishes/active/{id}","/restaurants/{restaurantId}/employee").hasRole("PROPIETARIO")
+                        .antMatchers(HttpMethod.POST, "/dishes","/dishes/update/{id}","dishes/active/{id}","/restaurants/{restaurantId}/employee","orders/efficiency").hasRole("PROPIETARIO")
                         .antMatchers(HttpMethod.GET, "/restaurants/list","dishes/restaurant/{restaurantId}","/orders","/orders/cancel/{orderId}","orders/logs/client").hasRole("CLIENTE")
                         .antMatchers(HttpMethod.GET, "/orders/list","/orders/employee/{orderId}","/orders/ready/{orderId}","/orders/deliver/{orderId}").hasRole("EMPLEADO")
                         .anyRequest().authenticated()

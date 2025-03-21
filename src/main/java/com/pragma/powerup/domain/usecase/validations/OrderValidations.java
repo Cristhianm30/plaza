@@ -41,11 +41,6 @@ public class OrderValidations {
         });
     }
 
-    public void validateEmployeeRole(String role) {
-        if (role == null || !role.equals("EMPLEADO")) {
-            throw new InvalidEmployeeException();
-        }
-    }
 
     public void validateRestaurantEmployee (Long restaurantId,Long employeeRestaurantId){
         if (!restaurantId.equals(employeeRestaurantId)){

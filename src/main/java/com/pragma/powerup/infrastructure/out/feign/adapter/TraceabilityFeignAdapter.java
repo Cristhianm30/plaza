@@ -1,6 +1,9 @@
 package com.pragma.powerup.infrastructure.out.feign.adapter;
 
+import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
+import com.pragma.powerup.application.mapper.IEfficiencyMapper;
+import com.pragma.powerup.domain.model.OrderEfficiency;
 import com.pragma.powerup.domain.model.Traceability;
 import com.pragma.powerup.domain.spi.ITraceabilityFeignPort;
 import com.pragma.powerup.infrastructure.out.feign.client.ITraceabilityFeignClient;
@@ -18,6 +21,7 @@ public class TraceabilityFeignAdapter implements ITraceabilityFeignPort {
 
     private final ITraceabilityFeignClient traceabilityFeignClient;
     private final ITraceabilityMapper traceabilityMapper;
+    private final IEfficiencyMapper efficiencyMapper;
 
 
     @Override
@@ -35,6 +39,17 @@ public class TraceabilityFeignAdapter implements ITraceabilityFeignPort {
         List<TraceabilityDto> dtoList = response.getBody();
         return dtoList != null ? dtoList.stream()
                 .map(traceabilityMapper::toModel)
+                .collect(Collectors.toList()) : null;
+    }
+
+    @Override
+    public List<OrderEfficiency> getOrderEfficiency(List<Long> orderId) {
+
+        ResponseEntity<List<OrderEfficiencyDto>> response = traceabilityFeignClient.getOrderEfficiency(orderId);
+        List<OrderEfficiencyDto> dtoList = response.getBody();
+
+        return dtoList != null ? dtoList.stream()
+                .map(efficiencyMapper::toModel)
                 .collect(Collectors.toList()) : null;
     }
 }

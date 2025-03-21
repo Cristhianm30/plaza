@@ -25,7 +25,8 @@ public enum ExceptionResponse {
     NOT_READY("La orden no esta lista"),
     INVALID_CLIENT_ORDER("El cliente logueado no es quien realizo la order"),
     INVALID_CANCELING("Lo sentimos, tu pedido ya está en preparación y no puede cancelarse o ya lo has cancelado anteriormente"),
-    INVALID_ORDER_STATUS("EL estado de la orden tiene una inconsistencia ");
+    INVALID_ORDER_STATUS("EL estado de la orden tiene una inconsistencia "),
+    ORDERS_NOT_FOUND("No se encontraron ordernes");
 
     private final String message;
 

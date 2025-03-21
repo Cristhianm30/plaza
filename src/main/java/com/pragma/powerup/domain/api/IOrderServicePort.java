@@ -1,6 +1,7 @@
 package com.pragma.powerup.domain.api;
 
 import com.pragma.powerup.domain.model.Order;
+import com.pragma.powerup.domain.model.OrderEfficiency;
 import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.model.Traceability;
 
@@ -14,5 +15,6 @@ public interface IOrderServicePort {
     Order deliverOrder(Long orderId, String otp, String token);
     Order cancelOrder(Long orderId, String token);
     List<Traceability> getTraceabilityByClient(String token);
+    List<OrderEfficiency> getOrdersEfficiency(String token);
 
 }

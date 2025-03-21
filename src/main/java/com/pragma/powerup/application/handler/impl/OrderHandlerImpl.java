@@ -1,20 +1,22 @@
 package com.pragma.powerup.application.handler.impl;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
+import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
 import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import com.pragma.powerup.application.handler.IOrderHandler;
+import com.pragma.powerup.application.mapper.IEfficiencyMapper;
 import com.pragma.powerup.application.mapper.IOrderRequestMapper;
 import com.pragma.powerup.application.mapper.IOrderResponseMapper;
 import com.pragma.powerup.application.mapper.ITraceabilityMapper;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.model.Order;
+import com.pragma.powerup.domain.model.OrderEfficiency;
 import com.pragma.powerup.domain.model.Pagination;
 import com.pragma.powerup.domain.model.Traceability;
 import com.pragma.powerup.domain.spi.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.IRestaurantPersistencePort;
-import com.pragma.powerup.domain.spi.ITraceabilityFeignPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,7 @@ public class OrderHandlerImpl implements IOrderHandler {
     private final IRestaurantPersistencePort restaurantPersistencePort;
     private final IDishPersistencePort dishPersistencePort;
     private final ITraceabilityMapper traceabilityMapper;
+    private final IEfficiencyMapper efficiencyMapper;
 
     @Override
     public OrderResponseDto createOrder(OrderRequestDto orderRequest, String token) {
@@ -97,6 +100,16 @@ public class OrderHandlerImpl implements IOrderHandler {
 
         return traceList.stream()
                 .map(traceabilityMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderEfficiencyDto> getOrdersEfficiency(String token) {
+
+        List<OrderEfficiency> efficiencies = orderServicePort.getOrdersEfficiency(token);
+
+        return efficiencies.stream()
+                .map(efficiencyMapper::toDto)
                 .collect(Collectors.toList());
     }
 

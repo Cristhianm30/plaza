@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IOrderRepository extends JpaRepository<OrderEntity, Long> {
+
     boolean existsByClientIdAndStatusIn(Long clientId, List<String> statuses);
+
     Page<OrderEntity> findByStatusAndRestaurantId(String status, Long restaurantId, Pageable pageable);
+
     Optional<OrderEntity> findById (Long orderId);
+
+    List<OrderEntity> findOrdersByRestaurantId (Long restaurantId);
+
 }

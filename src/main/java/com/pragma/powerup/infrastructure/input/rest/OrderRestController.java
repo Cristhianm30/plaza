@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.OrderRequestDto;
+import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
 import com.pragma.powerup.application.dto.response.OrderResponseDto;
 import com.pragma.powerup.application.dto.response.PaginationResponseDto;
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
@@ -77,6 +78,16 @@ public class OrderRestController {
     ){
         return ResponseEntity.ok(orderHandler.getLogsByClient(token));
     }
+
+    @GetMapping("/efficiency")
+    public ResponseEntity<List<OrderEfficiencyDto>> getOrdersEfficiency(
+            @RequestHeader("Authorization") String token
+    ) {
+        List<OrderEfficiencyDto> efficiencyList = orderHandler.getOrdersEfficiency(token);
+        return ResponseEntity.ok(efficiencyList);
+    }
+
+
 
 
 

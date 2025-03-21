@@ -8,4 +8,5 @@ public interface IRestaurantPersistencePort {
     Restaurant save (Restaurant restaurant);
     Restaurant findById (Long id);
     Pagination<Restaurant> findAllPaginated(int page, int size, String sortBy);
+    Restaurant findRestaurantByOwnerId (Long ownerId);
 }

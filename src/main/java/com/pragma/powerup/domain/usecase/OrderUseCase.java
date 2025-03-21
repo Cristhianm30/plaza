@@ -1,6 +1,7 @@
 package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IOrderServicePort;
+import com.pragma.powerup.domain.exception.OrdersNotFoundException;
 import com.pragma.powerup.domain.model.*;
 import com.pragma.powerup.domain.spi.*;
 import com.pragma.powerup.domain.usecase.validations.OrderValidations;
@@ -8,6 +9,7 @@ import com.pragma.powerup.domain.usecase.validations.TokenValidations;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class OrderUseCase implements IOrderServicePort {
@@ -20,6 +22,7 @@ public class OrderUseCase implements IOrderServicePort {
     private final IMessagingFeignPort messagingFeignPort;
     private final IOrderOtpPersistencePort orderOtpPersistencePort;
     private final ITraceabilityFeignPort traceabilityFeignPort;
+    private final IRestaurantPersistencePort restaurantPersistencePort;
 
     public OrderUseCase(IOrderPersistencePort orderPersistencePort,
                         TokenValidations tokenValidations,
@@ -27,7 +30,7 @@ public class OrderUseCase implements IOrderServicePort {
                         IUserFeignPort userFeignPort,
                         IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort,
                         IMessagingFeignPort messagingFeignPort,
-                        IOrderOtpPersistencePort orderOtpPersistencePort, ITraceabilityFeignPort traceabilityFeignPort) {
+                        IOrderOtpPersistencePort orderOtpPersistencePort, ITraceabilityFeignPort traceabilityFeignPort, IRestaurantPersistencePort restaurantPersistencePort) {
 
         this.orderPersistencePort = orderPersistencePort;
         this.tokenValidations = tokenValidations;
@@ -37,6 +40,7 @@ public class OrderUseCase implements IOrderServicePort {
         this.messagingFeignPort = messagingFeignPort;
         this.orderOtpPersistencePort = orderOtpPersistencePort;
         this.traceabilityFeignPort = traceabilityFeignPort;
+        this.restaurantPersistencePort = restaurantPersistencePort;
     }
 
     @Override
@@ -63,9 +67,6 @@ public class OrderUseCase implements IOrderServicePort {
 
         String cleanedToken = tokenValidations.cleanedToken(token);
         Long employeeId = tokenValidations.getUserIdFromToken(cleanedToken);
-
-        String userRole = userFeignPort.getUserRole(employeeId);
-        orderValidations.validateEmployeeRole(userRole); //validacion innecesaria por el springSecurity :/
 
         EmployeeRestaurant employee = employeeRestaurantPersistencePort.findByEmployeeId(employeeId);
         Long restaurantId = employee.getRestaurantId();
@@ -182,5 +183,30 @@ public class OrderUseCase implements IOrderServicePort {
         Long clientId = tokenValidations.getUserIdFromToken(cleanedToken);
 
         return traceabilityFeignPort.getTraceabilityByClient(clientId);
+    }
+
+    @Override
+    public List<OrderEfficiency> getOrdersEfficiency(String token) {
+
+        String cleanedToken = tokenValidations.cleanedToken(token);
+
+        Long ownerId = tokenValidations.getUserIdFromToken(cleanedToken);
+
+        Restaurant ownerRestaurant = restaurantPersistencePort.findRestaurantByOwnerId(ownerId);
+
+        Long restaurantId = ownerRestaurant.getId();
+
+        List<Order> orders = orderPersistencePort.findOrdersByRestaurantId(restaurantId);
+
+        if (orders.isEmpty()) {
+            throw new OrdersNotFoundException();
+        }
+
+        List<Long> orderIds = orders.stream()
+                .map(Order::getId)
+                .collect(Collectors.toList());
+
+
+        return traceabilityFeignPort.getOrderEfficiency(orderIds);
     }
 }

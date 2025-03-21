@@ -1,11 +1,13 @@
 package com.pragma.powerup.infrastructure.out.feign.client;
 
+import com.pragma.powerup.application.dto.response.OrderEfficiencyDto;
 import com.pragma.powerup.application.dto.response.TraceabilityDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -17,5 +19,8 @@ public interface ITraceabilityFeignClient {
 
     @GetMapping("/traceability/{clientId}")
     ResponseEntity<List<TraceabilityDto>> getTraceabilityByClient(@PathVariable("clientId") Long clientId);
+
+    @PostMapping("/traceability/efficiency/orders")
+    ResponseEntity<List<OrderEfficiencyDto>> getOrderEfficiency (@RequestBody List<Long> orderId);
 
 }

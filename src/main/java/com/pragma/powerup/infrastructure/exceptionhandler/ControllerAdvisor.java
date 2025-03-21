@@ -190,5 +190,12 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_ORDER_STATUS.getMessage()));
     }
+
+    @ExceptionHandler(OrdersNotFoundException.class)
+    public ResponseEntity<Map<String, String>> OrdersNotFoundException(
+            OrdersNotFoundException OrdersNotFoundException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDERS_NOT_FOUND.getMessage()));
+    }
     
 }
