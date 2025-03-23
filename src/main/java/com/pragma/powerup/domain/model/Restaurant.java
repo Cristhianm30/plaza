@@ -28,6 +28,9 @@ public class Restaurant {
         this.nit = nit;
     }
 
+    public Restaurant() {
+    }
+
     public Long getId() {
         return id;
     }

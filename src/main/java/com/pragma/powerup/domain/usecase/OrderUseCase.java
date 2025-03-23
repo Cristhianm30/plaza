@@ -6,12 +6,13 @@ import com.pragma.powerup.domain.model.*;
 import com.pragma.powerup.domain.spi.*;
 import com.pragma.powerup.domain.usecase.validations.OrderValidations;
 import com.pragma.powerup.domain.usecase.validations.TokenValidations;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Builder
 public class OrderUseCase implements IOrderServicePort {
 
     private final IOrderPersistencePort orderPersistencePort;
@@ -24,24 +25,6 @@ public class OrderUseCase implements IOrderServicePort {
     private final ITraceabilityFeignPort traceabilityFeignPort;
     private final IRestaurantPersistencePort restaurantPersistencePort;
 
-    public OrderUseCase(IOrderPersistencePort orderPersistencePort,
-                        TokenValidations tokenValidations,
-                        OrderValidations orderValidations,
-                        IUserFeignPort userFeignPort,
-                        IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort,
-                        IMessagingFeignPort messagingFeignPort,
-                        IOrderOtpPersistencePort orderOtpPersistencePort, ITraceabilityFeignPort traceabilityFeignPort, IRestaurantPersistencePort restaurantPersistencePort) {
-
-        this.orderPersistencePort = orderPersistencePort;
-        this.tokenValidations = tokenValidations;
-        this.orderValidations = orderValidations;
-        this.userFeignPort = userFeignPort;
-        this.employeeRestaurantPersistencePort = employeeRestaurantPersistencePort;
-        this.messagingFeignPort = messagingFeignPort;
-        this.orderOtpPersistencePort = orderOtpPersistencePort;
-        this.traceabilityFeignPort = traceabilityFeignPort;
-        this.restaurantPersistencePort = restaurantPersistencePort;
-    }
 
     @Override
     public Order createOrder(Order order, String token) {

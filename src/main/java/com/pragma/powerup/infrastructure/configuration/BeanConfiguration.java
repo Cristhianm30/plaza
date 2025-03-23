@@ -128,8 +128,17 @@ public class BeanConfiguration {
             ITraceabilityFeignPort traceabilityFeignPort,
             IRestaurantPersistencePort restaurantPersistencePort
     ){
-        return new OrderUseCase(orderPersistencePort,tokenValidations,orderValidations,userFeignPort,employeeRestaurantPersistencePort,messagingFeignPort,
-                orderOtpPersistencePort,traceabilityFeignPort,restaurantPersistencePort);
+        return OrderUseCase.builder()
+                .orderPersistencePort(orderPersistencePort)
+                .tokenValidations(tokenValidations)
+                .orderValidations(orderValidations)
+                .userFeignPort(userFeignPort)
+                .employeeRestaurantPersistencePort(employeeRestaurantPersistencePort)
+                .messagingFeignPort(messagingFeignPort)
+                .orderOtpPersistencePort(orderOtpPersistencePort)
+                .traceabilityFeignPort(traceabilityFeignPort)
+                .restaurantPersistencePort(restaurantPersistencePort)
+                .build();
     }
 
     @Bean

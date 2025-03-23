@@ -1,7 +1,13 @@
 package com.pragma.powerup.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class Traceability {
 
     private Long orderId;
@@ -13,19 +19,6 @@ public class Traceability {
     private Long employeeId;
     private String employeeEmail;
 
-    public Traceability() {
-    }
-
-    public Traceability(Long orderId, Long clientId, String clientEmail, LocalDateTime date, String lastStatus, String newStatus, Long employeeId, String employeeEmail) {
-        this.orderId = orderId;
-        this.clientId = clientId;
-        this.clientEmail = clientEmail;
-        this.date = date;
-        this.lastStatus = lastStatus;
-        this.newStatus = newStatus;
-        this.employeeId = employeeId;
-        this.employeeEmail = employeeEmail;
-    }
 
     public Long getOrderId() {
         return orderId;

@@ -23,6 +23,9 @@ public class Order {
         this.dishes = dishes;
     }
 
+    public Order() {
+    }
+
     public Long getChefId() {return chefId;}
 
     public void setChefId(Long chefId) {this.chefId = chefId;}

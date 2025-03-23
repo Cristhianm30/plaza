@@ -1,5 +1,10 @@
 package com.pragma.powerup.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class Dish {
     private Long id;
     private String name;
@@ -10,16 +15,6 @@ public class Dish {
     private String imageUrl;
     private Boolean active;
 
-    public Dish(Long id, String name, Category category, String description, Integer price, Restaurant restaurant, String imageUrl, Boolean active) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.price = price;
-        this.restaurant = restaurant;
-        this.imageUrl = imageUrl;
-        this.active = active;
-    }
 
     public Long getId() {
         return id;

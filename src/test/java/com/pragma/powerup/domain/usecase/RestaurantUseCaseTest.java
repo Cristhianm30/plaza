@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class RestaurantUseCaseTest {
+ class RestaurantUseCaseTest {
 
     @Mock
     private IRestaurantPersistencePort restaurantPersistencePort;
@@ -45,16 +45,16 @@ public class RestaurantUseCaseTest {
     private Restaurant restaurant;
 
     @BeforeEach
-    public void setup() {
-        // Se crea un restaurante de ejemplo
+     void setup() {
+
         restaurant = new Restaurant(null, "Restaurante Test", "Calle 123", 100L, "+123456789", "logo.png", "123456");
     }
 
     @Test
-    public void testCreateRestaurantSuccessfully() {
-        // Simulamos que el feign client retorna "PROPIETARIO"
+     void testCreateRestaurantSuccessfully() {
+
         when(userFeignPort.getUserRole(restaurant.getOwnerId())).thenReturn("PROPIETARIO");
-        // Al guardar el restaurante, se asigna un id
+
         Restaurant savedRestaurant = new Restaurant(1L, restaurant.getName(), restaurant.getAddress(),
                 restaurant.getOwnerId(), restaurant.getPhone(), restaurant.getLogoUrl(), restaurant.getNit());
         when(restaurantPersistencePort.save(restaurant)).thenReturn(savedRestaurant);
@@ -71,10 +71,10 @@ public class RestaurantUseCaseTest {
     }
 
     @Test
-    public void testCreateRestaurantInvalidOwner() {
+     void testCreateRestaurantInvalidOwner() {
         when(userFeignPort.getUserRole(restaurant.getOwnerId())).thenReturn("CLIENTE");
 
-        // Simular que la validación lanza la excepción
+
         doThrow(new InvalidOwnerException())
                 .when(restaurantValidations).validateOwnerRole("CLIENTE");
 
@@ -84,12 +84,12 @@ public class RestaurantUseCaseTest {
     }
 
     @Test
-    public void testGetAllRestaurantsPaginated() {
+     void testGetAllRestaurantsPaginated() {
         int page = 0, size = 10;
         String sortBy = "name";
-        // Se crea un objeto de paginación de ejemplo (ajusta según la estructura de tu POJO)
+
         Pagination pagination = new Pagination(Collections.emptyList(), 0, 0, 0L);
-        // Por ejemplo, podrías setear totalPages, currentPage, etc.
+
         when(restaurantPersistencePort.findAllPaginated(page, size, sortBy)).thenReturn(pagination);
 
         Pagination result = restaurantUseCase.getAllRestaurantsPaginated(page, size, sortBy);
@@ -99,8 +99,8 @@ public class RestaurantUseCaseTest {
     }
 
     @Test
-    public void testAssignEmployeeToRestaurantSuccessfully() {
-        // Configuración
+     void testAssignEmployeeToRestaurantSuccessfully() {
+
         Long restaurantId = 1L;
         Long employeeId = 2L;
         AssignEmployeeRequestDto request = new AssignEmployeeRequestDto(employeeId);
@@ -112,21 +112,21 @@ public class RestaurantUseCaseTest {
         EmployeeRestaurant expected = new EmployeeRestaurant(1L, employeeId, restaurantId);
         when(employeeRestaurantPersistencePort.saveEmployee(any())).thenReturn(expected);
 
-        // Ejecución
+
         EmployeeRestaurant result = restaurantUseCase.assignEmployeeToRestaurant(
                 restaurantId,
                 request,
                 token
         );
 
-        // Verificaciones
+
         verify(tokenValidations).validateTokenAndOwnership("cleanToken", restaurantId);
         verify(restaurantValidations).validateEmployeeRole("EMPLEADO");
         assertEquals(expected, result);
     }
 
     @Test
-    public void testAssignEmployeeInvalidRole() {
+     void testAssignEmployeeInvalidRole() {
         Long restaurantId = 1L;
         Long employeeId = 2L;
         AssignEmployeeRequestDto request = new AssignEmployeeRequestDto(employeeId);
@@ -134,7 +134,7 @@ public class RestaurantUseCaseTest {
         when(tokenValidations.cleanedToken(any())).thenReturn("cleanToken");
         when(userFeignPort.getUserRole(employeeId)).thenReturn("PROPIETARIO");
 
-        // Simular que la validación del rol lanza la excepción
+
         doThrow(new InvalidEmployeeException())
                 .when(restaurantValidations).validateEmployeeRole("PROPIETARIO");
 

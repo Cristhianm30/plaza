@@ -36,7 +36,7 @@ public interface IOrderRequestMapper {
             @Context IDishPersistencePort dishPort
     );
 
-    // Mapeo de dishes (corregir anotaciones)
+
     @Named("mapDishes")
     @IterableMapping(qualifiedByName = "mapSingleDish")
     default List<OrderDish> mapDishes(
@@ -57,7 +57,7 @@ public interface IOrderRequestMapper {
         return new OrderDish(null, dish, dto.getQuantity());
     }
 
-    // Mapeo de restaurant (evitar ambigüedad)
+
     @Named("mapRestaurant")
     default Restaurant mapRestaurant(
             Long restaurantId,

@@ -136,64 +136,64 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(InvalidOrderEmployeeException.class)
-    public ResponseEntity<Map<String, String>> InvalidOrderEmployeeException(
-            InvalidOrderEmployeeException InvalidOrderEmployeeException) {
+    public ResponseEntity<Map<String, String>> invalidOrderEmployeeException(
+            InvalidOrderEmployeeException invalidOrderEmployeeException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_EMPLOYEE_ORDER.getMessage()));
     }
 
     @ExceptionHandler(NotPreparationException.class)
-    public ResponseEntity<Map<String, String>> NotPreparationException(
-            NotPreparationException NotPreparationException) {
+    public ResponseEntity<Map<String, String>> notPreparationException(
+            NotPreparationException notPreparationException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_PREPARATION.getMessage()));
     }
 
     @ExceptionHandler(NotPendingException.class)
-    public ResponseEntity<Map<String, String>> NotPendingException(
-            NotPendingException NotPendingException) {
+    public ResponseEntity<Map<String, String>> notPendingException(
+            NotPendingException notPendingException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_PENDING.getMessage()));
     }
 
     @ExceptionHandler(WrongOtpException.class)
-    public ResponseEntity<Map<String, String>> WrongOtpException(
-            WrongOtpException WrongOtpException) {
+    public ResponseEntity<Map<String, String>> wrongOtpException(
+            WrongOtpException wrongOtpException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.WRONG_OTP.getMessage()));
     }
 
     @ExceptionHandler(NotReadyException.class)
-    public ResponseEntity<Map<String, String>> NotReadyException(
-            NotReadyException NotReadyException) {
+    public ResponseEntity<Map<String, String>> notReadyException(
+            NotReadyException notReadyException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NOT_READY.getMessage()));
     }
 
     @ExceptionHandler(InvalidOrderClientException.class)
-    public ResponseEntity<Map<String, String>> InvalidOrderClientException(
-            InvalidOrderClientException InvalidOrderClientException) {
+    public ResponseEntity<Map<String, String>> invalidOrderClientException(
+            InvalidOrderClientException invalidOrderClientException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_CLIENT_ORDER.getMessage()));
     }
 
     @ExceptionHandler(InvalidCancelingException.class)
-    public ResponseEntity<Map<String, String>> InvalidCancelingException(
-            InvalidCancelingException InvalidCancelingException) {
+    public ResponseEntity<Map<String, String>> invalidCancelingException(
+            InvalidCancelingException invalidCancelingException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_CANCELING.getMessage()));
     }
 
     @ExceptionHandler(InvalidOrderStatusException.class)
-    public ResponseEntity<Map<String, String>> InvalidOrderStatusException(
-            InvalidOrderStatusException InvalidOrderStatusException) {
+    public ResponseEntity<Map<String, String>> invalidOrderStatusException(
+            InvalidOrderStatusException invalidOrderStatusException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_ORDER_STATUS.getMessage()));
     }
 
     @ExceptionHandler(OrdersNotFoundException.class)
-    public ResponseEntity<Map<String, String>> OrdersNotFoundException(
-            OrdersNotFoundException OrdersNotFoundException) {
+    public ResponseEntity<Map<String, String>> ordersNotFoundException(
+            OrdersNotFoundException ordersNotFoundException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ORDERS_NOT_FOUND.getMessage()));
     }

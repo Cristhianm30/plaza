@@ -35,10 +35,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String email = jwtTokenProvider.getEmailFromToken(token);
             String role = jwtTokenProvider.getRoleFromToken(token);
 
-            // Crear UserDetails con los datos del token
+
             UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                     email,
-                    "", // No necesitamos la contraseña aquí
+                    "",
                     Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role))
             );
 

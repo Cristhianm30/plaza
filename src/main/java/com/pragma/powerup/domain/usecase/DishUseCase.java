@@ -27,7 +27,7 @@ public class DishUseCase implements IDishServicePort {
     public Dish createDish(Dish dish, String token) {
 
         String cleanedToken = tokenValidations.cleanedToken(token);
-        tokenValidations.validateTokenAndOwnership(cleanedToken, dish.getRestaurant().getId());
+
 
         if (dish.getRestaurant() == null) {
             throw new RestaurantNotFoundException();
@@ -36,6 +36,8 @@ public class DishUseCase implements IDishServicePort {
         if (dish.getCategory() == null) {
             throw new CategoryNotFoundException();
         }
+
+        tokenValidations.validateTokenAndOwnership(cleanedToken, dish.getRestaurant().getId());
 
         dish.setActive(true);
         dishValidations.validateDish(dish);

@@ -11,10 +11,10 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IOrderDishEntityMapper {
 
-    @Mapping(target = "dishId", source = "dish.id") // Mapea el ID del Dish al dishId
+    @Mapping(target = "dishId", source = "dish.id")
     OrderDishEntity toEntity(OrderDish orderDish);
 
-    @Mapping(target = "dish.id", source = "dishId") // Opcional, si necesitas el mapeo inverso
+    @Mapping(target = "dish.id", source = "dishId")
     OrderDish toModel(OrderDishEntity entity);
 
 }

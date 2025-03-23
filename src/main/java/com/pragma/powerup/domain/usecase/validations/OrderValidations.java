@@ -17,6 +17,13 @@ public class OrderValidations {
     private final IDishPersistencePort dishPersistencePort;
     private final ITraceabilityFeignPort traceabilityFeignPort;
 
+    private static final String PENDING = "PENDIENTE";
+    private static final String IN_PREPARATION = "EN_PREPARACION";
+    private static final String READY = "LISTO";
+    private static final String DELIVERED = "ENTREGADO";
+    private static final String CANCELLED = "CANCELADO";
+
+
     public OrderValidations(IOrderPersistencePort orderPersistencePort, IDishPersistencePort dishPersistencePort, ITraceabilityFeignPort traceabilityFeignPort) {
         this.orderPersistencePort = orderPersistencePort;
         this.dishPersistencePort = dishPersistencePort;
@@ -55,19 +62,19 @@ public class OrderValidations {
     }
 
     public void validateInPreparation(Order order){
-        if (!order.getStatus().equals("EN_PREPARACION")){
+        if (!order.getStatus().equals(IN_PREPARATION)){
             throw  new NotPreparationException();
         }
     }
 
     public void validatePending(Order order){
-        if (!order.getStatus().equals("PENDIENTE")){
+        if (!order.getStatus().equals(PENDING)){
             throw  new NotPendingException();
         }
     }
 
     public void validateReady (Order order){
-        if (!order.getStatus().equals("LISTO")){
+        if (!order.getStatus().equals(READY)){
             throw  new NotReadyException();
         }
     }
@@ -85,7 +92,7 @@ public class OrderValidations {
     }
 
     public void validateToCancel(Order order){
-        if (!order.getStatus().equals("PENDIENTE")){
+        if (!order.getStatus().equals(PENDING)){
             throw  new InvalidCancelingException();
         }
     }
@@ -127,18 +134,18 @@ public class OrderValidations {
         String lastStatus;
         if (order.getStatus() != null) {
             switch (order.getStatus()) {
-                case "PENDIENTE":
+                case PENDING:
                     lastStatus = null;
                     break;
-                case "EN_PREPARACION":
-                case "CANCELADO":
-                    lastStatus = "PENDIENTE";
+                case IN_PREPARATION:
+                case CANCELLED:
+                    lastStatus = PENDING;
                     break;
-                case "LISTO":
-                    lastStatus = "EN_PREPARACION";
+                case READY:
+                    lastStatus = IN_PREPARATION;
                     break;
-                case "ENTREGADO":
-                    lastStatus = "LISTO";
+                case DELIVERED:
+                    lastStatus = READY;
                     break;
                 default:
                     throw new InvalidOrderStatusException();

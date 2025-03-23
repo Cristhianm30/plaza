@@ -65,15 +65,42 @@ dependencies {
 	implementation "org.springdoc:springdoc-openapi-webflux-ui:${openApiVersion}"
 
 
-
-
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+	testImplementation 'com.h2database:h2'
+	implementation 'com.h2database:h2'
 
 }
+
+def coverageExcludes = [
+		'**/dto/.*',
+		'**/spi/.**',
+		'**/api/.*',
+		'**/mappers/.*',
+		'**/repository/.*',
+		'**/*.test',
+		'**/generated/.*',
+]
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+		html.required = true
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: coverageExcludes)
+		}))
+	}
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
+
+
 test {
+	useJUnitPlatform()
 	finalizedBy jacocoTestReport
 }

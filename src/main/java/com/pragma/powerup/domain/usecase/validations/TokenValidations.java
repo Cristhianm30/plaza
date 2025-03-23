@@ -17,21 +17,21 @@ public class TokenValidations {
     }
 
     public void validateTokenAndOwnership(String token, Long restaurantId) {
-        // Validar token
+
         if (!jwtTokenProvider.validateToken(token)) {
             throw new InvalidTokenException();
         }
 
-        // Extraer datos del token
+
         String role = jwtTokenProvider.getRoleFromToken(token);
         Long ownerId = jwtTokenProvider.getUserIdFromToken(token);
 
-        // Validar rol
+
         if (!"PROPIETARIO".equals(role)) {
             throw new InvalidOwnerException();
         }
 
-        // Validar propiedad del restaurante
+
         Restaurant restaurant = restaurantPersistence.findById(restaurantId);
         if (!restaurant.getOwnerId().equals(ownerId)) {
             throw new InvalidRestaurantOwnerException();

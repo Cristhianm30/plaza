@@ -11,6 +11,9 @@ public class EmployeeRestaurant {
         this.restaurantId = restaurantId;
     }
 
+    public EmployeeRestaurant() {
+    }
+
     public Long getId() {
         return id;
     }

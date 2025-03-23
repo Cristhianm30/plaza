@@ -48,7 +48,7 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
                 .map(restaurantEntityMapper::entityToModel)
                 .collect(Collectors.toList());
 
-        return new Pagination<Restaurant>(
+        return new Pagination<>(
                 restaurants,
                 entityPage.getNumber(),
                 entityPage.getTotalPages(),
